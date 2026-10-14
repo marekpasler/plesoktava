@@ -3,44 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050807">
+    <meta name="description" content="Maturitní ples třídy 8.A8 Gymnázia Kolín — 12. března 2027 v MSD Kolín.">
+
+    <!-- Open Graph pro sociální sítě -->
+    <meta property="og:title" content="8.A8 // THE MATRIX PLES">
+    <meta property="og:description" content="Maturitní ples 8.A8 // 12. 3. 2027 MSD Kolín">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://8a8.gkolin.cz">
 
     <title>8.A8 // THE MATRIX</title>
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23050807'/><text x='50%' y='68%' font-size='60' text-anchor='middle' fill='%2300ff66' font-family='monospace' font-weight='bold'>&gt;_</text></svg>">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-color: #050807;
+            --bg: #050807;
             --card-bg: rgba(12, 22, 16, 0.65);
-            --border-color: rgba(0, 255, 102, 0.25);
+            --border: rgba(0, 255, 102, 0.25);
             --primary: #00ff66;
             --primary-glow: rgba(0, 255, 102, 0.4);
             --text: #e0f7ed;
             --text-muted: #80a892;
+            --font-mono: 'Fira Code', monospace;
+            --font-sans: 'Inter', sans-serif;
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             color: var(--text);
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-sans);
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
         }
 
         canvas#matrix {
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100vw;
             height: 100vh;
             z-index: 1;
@@ -65,11 +73,11 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
             font-size: 0.85rem;
             color: var(--primary);
             background: rgba(0, 255, 102, 0.08);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             padding: 6px 16px;
             border-radius: 20px;
             margin-bottom: 20px;
@@ -109,24 +117,25 @@
         .subtitle {
             color: var(--text-muted);
             font-size: 1.1rem;
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
         }
 
-        /* Unified Save The Date Dropdown */
-        .calendar-dropdown {
+        /* Zero-JS Calendar Dropdown */
+        .cal-dropdown {
             position: relative;
             display: inline-block;
             margin-top: 18px;
         }
 
-        .btn-save-date {
+        .cal-dropdown summary {
+            list-style: none;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             background: rgba(0, 255, 102, 0.08);
             border: 1px solid var(--primary);
             color: var(--primary);
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
             font-size: 0.88rem;
             font-weight: 600;
             padding: 10px 22px;
@@ -135,9 +144,12 @@
             transition: all 0.25s ease;
             backdrop-filter: blur(6px);
             box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);
+            user-select: none;
         }
 
-        .btn-save-date:hover {
+        .cal-dropdown summary::-webkit-details-marker { display: none; }
+
+        .cal-dropdown summary:hover {
             background: rgba(0, 255, 102, 0.2);
             box-shadow: 0 0 25px var(--primary-glow);
             color: #ffffff;
@@ -145,7 +157,6 @@
         }
 
         .cal-menu {
-            display: none;
             position: absolute;
             top: calc(100% + 8px);
             left: 50%;
@@ -156,23 +167,16 @@
             padding: 6px;
             z-index: 100;
             width: 210px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary-glow);
-        }
-
-        .cal-menu.show {
-            display: block;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.8), 0 0 20px var(--primary-glow);
         }
 
         .cal-menu a {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             width: 100%;
-            text-align: center;
-            background: transparent;
             color: var(--text);
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
             font-size: 0.8rem;
             padding: 10px 12px;
             border-radius: 6px;
@@ -207,7 +211,7 @@
             width: 100%;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: scan 3s infinite;
+            animation: scan 3s infinite linear;
         }
 
         @keyframes scan {
@@ -215,22 +219,12 @@
             100% { left: 100%; }
         }
 
-        .cta-card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .cta-card p {
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            font-size: 0.95rem;
-        }
+        .cta-card h2 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
+        .cta-card p { color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; }
 
         .btn-instagram {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 12px;
             background: var(--primary);
             color: #050807;
@@ -260,7 +254,7 @@
 
         .countdown-item {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px 10px;
             text-align: center;
@@ -268,7 +262,7 @@
         }
 
         .countdown-value {
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 600;
             color: var(--primary);
@@ -283,61 +277,29 @@
             margin-top: 5px;
         }
 
-        /* Content Sections */
-        .grid-sections {
-            display: grid;
-            gap: 20px;
-        }
+        /* Grid & Cards */
+        .grid-sections { display: grid; gap: 20px; }
 
         .card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 24px;
             backdrop-filter: blur(10px);
             transition: border-color 0.3s;
         }
 
-        .card:hover {
-            border-color: rgba(0, 255, 102, 0.5);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .card-icon {
-            font-size: 1.3rem;
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .card-body {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .card-body a {
-            color: var(--primary);
-            text-decoration: none;
-            border-bottom: 1px dashed var(--primary);
-        }
-
-        .card-body a:hover {
-            border-bottom-style: solid;
-        }
+        .card:hover { border-color: rgba(0, 255, 102, 0.5); }
+        .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .card-icon { font-size: 1.3rem; }
+        .card-title { font-size: 1.1rem; font-weight: 600; color: #fff; }
+        .card-body { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+        .card-body a { color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary); }
+        .card-body a:hover { border-bottom-style: solid; }
 
         .status-badge {
             display: inline-block;
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
             font-size: 0.8rem;
             padding: 4px 10px;
             border-radius: 6px;
@@ -347,7 +309,7 @@
             margin-top: 5px;
         }
 
-        /* Students Database Grid */
+        /* Database Nodes Grid */
         .section-title {
             font-size: 1.3rem;
             font-weight: 700;
@@ -356,7 +318,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
         }
 
         .students-grid {
@@ -371,7 +333,7 @@
             border-radius: 12px;
             padding: 16px 10px;
             text-align: center;
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
             transition: all 0.3s;
         }
 
@@ -380,54 +342,24 @@
             background: rgba(0, 255, 102, 0.05);
         }
 
-        .student-icon {
-            font-size: 1.5rem;
-            margin-bottom: 6px;
-            opacity: 0.5;
-        }
+        .student-icon { font-size: 1.5rem; margin-bottom: 6px; opacity: 0.5; }
+        .student-id { font-size: 0.75rem; color: var(--primary); }
+        .student-status { font-size: 0.65rem; color: var(--text-muted); margin-top: 4px; }
 
-        .student-id {
-            font-size: 0.75rem;
-            color: var(--primary);
-        }
-
-        .student-status {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        /* Hangover Calculator Widget */
+        /* Calculator Widget */
         .calc-box {
             background: rgba(0, 20, 10, 0.5);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 24px;
             margin-top: 30px;
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
         }
 
-        .calc-box h3 {
-            color: #fff;
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-        }
-
-        .slider-group {
-            margin: 15px 0;
-        }
-
-        .slider-group label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        input[type=range] {
-            width: 100%;
-            accent-color: var(--primary);
-        }
+        .calc-box h3 { color: #fff; margin-bottom: 12px; font-size: 1.1rem; }
+        .slider-group { margin: 15px 0; }
+        .slider-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
+        input[type=range] { width: 100%; accent-color: var(--primary); }
 
         .calc-result {
             margin-top: 15px;
@@ -443,24 +375,24 @@
             text-align: center;
             margin-top: 60px;
             color: var(--text-muted);
-            font-family: 'Fira Code', monospace;
+            font-family: var(--font-mono);
             font-size: 0.85rem;
         }
 
         @media (max-width: 600px) {
-            .countdown-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .students-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .countdown-grid { grid-template-columns: repeat(2, 1fr); }
+            .students-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            canvas#matrix, .cta-card::before { animation: none; display: none; }
         }
     </style>
 </head>
 <body>
     <canvas id="matrix"></canvas>
 
-    <div class="container">
+    <main class="container">
         <header>
             <div class="badge">
                 <span class="badge-dot"></span>
@@ -469,13 +401,13 @@
             <h1><span class="the-text">THE</span>MATRIX</h1>
             <div class="subtitle">MATURITNÍ PLES 8.A8 // 12. BŘEZNA 2027</div>
 
-            <!-- Save The Date Dropdown -->
-            <div class="calendar-dropdown">
-                <button class="btn-save-date" onclick="toggleCalMenu(event)">
+            <!-- Zero-JS Save The Date Dropdown -->
+            <details class="cal-dropdown">
+                <summary>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                     SAVE THE DATE
-                </button>
-                <div class="cal-menu" id="calMenu">
+                </summary>
+                <div class="cal-menu">
                     <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Maturitn%C3%AD+ples+8.A8+%2F%2F+THE+MATRIX&dates=20270312T180000Z/20270313T010000Z&details=Vstup+do+simulace.+Maturitn%C3%AD+ples+tr%C3%ADdy+8.A8+Gymn%C3%A1zia+Kol%C3%ADn.&location=MSD+Kol%C3%ADn%2C+Z%C3%A1meck%C3%A1+109%2C+280+02+Kol%C3%ADn" target="_blank" rel="noopener">
                         Google Kalendář
                     </a>
@@ -483,21 +415,21 @@
                         Apple / Outlook (.ics)
                     </a>
                 </div>
-            </div>
+            </details>
         </header>
 
         <!-- Main Instagram CTA -->
-        <div class="cta-card">
+        <section class="cta-card">
             <h2>HLAVNÍ INFORMACE A AKTUALITY</h2>
             <p>Sleduj náš třídní profil. Všechny novinky, aktualizace a fotky z příprav najdeš na jednom místě.</p>
-            <a href="https://www.instagram.com/8a8.gkolin/" target="_blank" class="btn-instagram">
+            <a href="https://www.instagram.com/8a8.gkolin/" target="_blank" rel="noopener" class="btn-instagram">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 INSTAGRAM @8a8.gkolin
             </a>
-        </div>
+        </section>
 
         <!-- Countdown -->
-        <div class="countdown-grid">
+        <section class="countdown-grid">
             <div class="countdown-item">
                 <div class="countdown-value" id="days">00</div>
                 <div class="countdown-label">Dní</div>
@@ -514,11 +446,11 @@
                 <div class="countdown-value" id="seconds">00</div>
                 <div class="countdown-label">Sekund</div>
             </div>
-        </div>
+        </section>
 
         <!-- Sections -->
-        <div class="grid-sections">
-            <div class="card">
+        <section class="grid-sections">
+            <article class="card">
                 <div class="card-header">
                     <span class="card-icon">📍</span>
                     <span class="card-title">Místo konání</span>
@@ -527,9 +459,9 @@
                     <strong>Městský společenský dům v Kolíně (MSD Kolín)</strong><br>
                     Zámecká 109, 280 02 Kolín
                 </div>
-            </div>
+            </article>
 
-            <div class="card">
+            <article class="card">
                 <div class="card-header">
                     <span class="card-icon">🎟️</span>
                     <span class="card-title">Lístky</span>
@@ -537,11 +469,11 @@
                 <div class="card-body">
                     Cena lístku: <strong>350 Kč</strong><br>
                     Status: <span class="status-badge">PRODEJ SE PŘIPRAVUJE</span><br>
-                    Předání lístků bude probíhat <strong>pouze ve škole nebo po osobní domluvě</strong> s maturanty. Bližší info ke spuštění prodeje sledujte na našem <a href="https://www.instagram.com/8a8.gkolin/" target="_blank">Instagramu</a>.
+                    Předání lístků bude probíhat <strong>pouze ve škole nebo po osobní domluvě</strong> s maturanty. Bližší info ke spuštění prodeje sledujte na našem <a href="https://www.instagram.com/8a8.gkolin/" target="_blank" rel="noopener">Instagramu</a>.
                 </div>
-            </div>
+            </article>
 
-            <div class="card">
+            <article class="card">
                 <div class="card-header">
                     <span class="card-icon">👔</span>
                     <span class="card-title">Dresscode</span>
@@ -550,9 +482,9 @@
                     Společenský oděv (<strong>Formal / Semi-formal</strong>).<br>
                     Doplňky a prvky v <strong>Matrix stylu</strong> (černé brýle, temné odstíny) vítány!
                 </div>
-            </div>
+            </article>
 
-            <div class="card">
+            <article class="card">
                 <div class="card-header">
                     <span class="card-icon">🍸</span>
                     <span class="card-title">Afterparty</span>
@@ -560,9 +492,9 @@
                 <div class="card-body">
                     Oficiální afterparty po skončení plesu proběhne v klubu <strong>Staré Lázně Kolín</strong>.
                 </div>
-            </div>
+            </article>
 
-            <div class="card">
+            <article class="card">
                 <div class="card-header">
                     <span class="card-icon">🕒</span>
                     <span class="card-title">Harmonogram večera</span>
@@ -570,19 +502,17 @@
                 <div class="card-body">
                     <span class="status-badge">STATUS: TBD (Bude upřesněno)</span>
                 </div>
-            </div>
-        </div>
+            </article>
+        </section>
 
         <!-- 28 Students Database Grid -->
         <div class="section-title">
             <span>💾</span> CLASS DATABASE // 28 NODES
         </div>
-        <div class="students-grid" id="studentsGrid">
-            <!-- Dynamicky vygeneruje 28 polí přes JS -->
-        </div>
+        <section class="students-grid" id="studentsGrid"></section>
 
         <!-- Hangover Calculator Widget -->
-        <div class="calc-box">
+        <section class="calc-box">
             <h3>🧪 HANGOVER PREDICTOR v1.0</h3>
             <div class="slider-group">
                 <label for="drinks">Předpokládaný počet drinků / piv na plese: <strong id="drinkVal" style="color:var(--primary);">4</strong></label>
@@ -591,15 +521,15 @@
             <div class="calc-result" id="calcResult">
                 STATUS: Mírné riziko // Ranní nevolnost: 15%
             </div>
-        </div>
+        </section>
 
         <footer>
             © 2027 Třída 8.A8 — Gymnázium Kolín
         </footer>
-    </div>
+    </main>
 
     <script>
-        // Matrix Rain Background
+        // Matrix Rain Background (rAF + GPU Throttling na 30 FPS)
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
 
@@ -609,16 +539,26 @@
         }
         resizeCanvas();
 
-        let chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*';
+        const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*';
         const fontSize = 14;
         let columns = Math.floor(canvas.width / fontSize);
         let rainDrops = Array(columns).fill(1);
 
-        function drawMatrix() {
+        let lastTime = 0;
+        const fps = 30;
+        const interval = 1000 / fps;
+
+        function drawMatrix(currentTime) {
+            requestAnimationFrame(drawMatrix);
+
+            const delta = currentTime - lastTime;
+            if (delta < interval) return;
+            lastTime = currentTime - (delta % interval);
+
             ctx.fillStyle = 'rgba(5, 8, 7, 0.1)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#00ff66';
+            ctx.fillStyle = '#00ff66';
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < rainDrops.length; i++) {
@@ -631,106 +571,70 @@
                 rainDrops[i]++;
             }
         }
+        requestAnimationFrame(drawMatrix);
 
-        setInterval(drawMatrix, 33);
-
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            resizeCanvas();
-            columns = Math.floor(canvas.width / fontSize);
-            rainDrops = Array(columns).fill(1);
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                resizeCanvas();
+                columns = Math.floor(canvas.width / fontSize);
+                rainDrops = Array(columns).fill(1);
+            }, 100);
         });
 
-        // Target Date: March 12, 2027 19:00:00
+        // Countdown Logic
         const targetDate = new Date('March 12, 2027 19:00:00').getTime();
+        const elDays = document.getElementById('days');
+        const elHours = document.getElementById('hours');
+        const elMinutes = document.getElementById('minutes');
+        const elSeconds = document.getElementById('seconds');
 
         function updateCountdown() {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-
+            const diff = targetDate - Date.now();
             if (diff > 0) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                document.getElementById('days').innerText = String(days).padStart(2, '0');
-                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+                elDays.innerText = String(Math.floor(diff / 86400000)).padStart(2, '0');
+                elHours.innerText = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+                elMinutes.innerText = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+                elSeconds.innerText = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
             } else {
-                document.getElementById('days').innerText = '00';
-                document.getElementById('hours').innerText = '00';
-                document.getElementById('minutes').innerText = '00';
-                document.getElementById('seconds').innerText = '00';
+                elDays.innerText = elHours.innerText = elMinutes.innerText = elSeconds.innerText = '00';
             }
         }
-
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Generate 28 Encrypted Student Nodes
-        const grid = document.getElementById('studentsGrid');
+        // Single Reflow DOM Fragment pre 28 Student Nodes
+        const fragment = document.createDocumentFragment();
         for (let i = 1; i <= 28; i++) {
             const num = String(i).padStart(2, '0');
             const card = document.createElement('div');
             card.className = 'student-card';
-            card.innerHTML = `
-                <div class="student-icon">🔒</div>
-                <div class="student-id">NODE_${num}</div>
-                <div class="student-status">ENCRYPTED</div>
-            `;
-            grid.appendChild(card);
+            card.innerHTML = `<div class="student-icon">🔒</div><div class="student-id">NODE_${num}</div><div class="student-status">ENCRYPTED</div>`;
+            fragment.appendChild(card);
         }
+        document.getElementById('studentsGrid').appendChild(fragment);
 
-        // Hangover Predictor Logic
+        // Hangover Predictor
         function updateCalc() {
             const val = document.getElementById('drinks').value;
             document.getElementById('drinkVal').innerText = val;
             const res = document.getElementById('calcResult');
 
-            if (val == 0) {
-                res.innerText = "STATUS: Hydratován // Riziko kocoviny: 0% (Nuda režim)";
-            } else if (val <= 3) {
-                res.innerText = `STATUS: Mírné riziko // Ranní nevolnost: ${val * 10}% // Systém v pořádku.`;
-            } else if (val <= 7) {
-                res.innerText = `STATUS: WARN // Ranní nevolnost: ${val * 12}% // Doporučeno doplnit H2O a smažák.`;
-            } else if (val <= 11) {
-                res.innerText = `STATUS: CRITICAL // Ranní nevolnost: ${val * 9}% // SYSTEM CRASH AT 04:30 AM!`;
-            } else {
-                res.innerText = `STATUS: SYSTEM OVERRIDE // Ranní nevolnost: 100% // HANGOVER DETECTED. REBOOT IMPOSSIBLE.`;
-            }
+            if (val == 0) res.innerText = "STATUS: Hydratován // Riziko kocoviny: 0% (Nuda režim)";
+            else if (val <= 3) res.innerText = `STATUS: Mírné riziko // Ranní nevolnost: ${val * 10}% // Systém v pořádku.`;
+            else if (val <= 7) res.innerText = `STATUS: WARN // Ranní nevolnost: ${val * 12}% // Doporučeno doplnit H2O a smažák.`;
+            else if (val <= 11) res.innerText = `STATUS: CRITICAL // Ranní nevolnost: ${val * 9}% // SYSTEM CRASH AT 04:30 AM!`;
+            else res.innerText = `STATUS: SYSTEM OVERRIDE // Ranní nevolnost: 100% // HANGOVER DETECTED. REBOOT IMPOSSIBLE.`;
         }
 
-        // Keyboard Easter Eggs
+        // Easter Eggs
         let typed = "";
         window.addEventListener('keydown', (e) => {
-            typed += e.key.toLowerCase();
-            if (typed.length > 20) typed = typed.substring(1);
-
-            if (typed.includes("matrix")) {
-                alert("SYSTEM OVERRIDE: Vítá vás Matrix 8.A8!");
-                typed = "";
-            } else if (typed.includes("hladikova")) {
-                alert("UČITELKA HLADÍKOVÁ: 'Kalkulačka je dobrý sluha, ale zlý pán.'");
-                typed = "";
-            } else if (typed.includes("cabelova")) {
-                alert("TRINITY (Čábelová): 'Vy jste ti vyvolení.'");
-                typed = "";
-            }
-        });
-
-        // Toggle Save The Date Menu
-        function toggleCalMenu(e) {
-            e.stopPropagation();
-            const menu = document.getElementById('calMenu');
-            menu.classList.toggle('show');
-        }
-
-        window.addEventListener('click', () => {
-            const menu = document.getElementById('calMenu');
-            if (menu && menu.classList.contains('show')) {
-                menu.classList.remove('show');
-            }
+            typed = (typed + e.key.toLowerCase()).slice(-20);
+            if (typed.includes("matrix")) { alert("SYSTEM: Vítá vás třída 8.A8!"); typed = ""; }
+            else if (typed.includes("hladikova")) { alert("UČITELKA HLADÍKOVÁ: 'Kalkulačka je dobrý sluha, ale zlý pán.'"); typed = ""; }
+            else if (typed.includes("cabelova")) { alert("TRINITY (Čábelová): 'Vy jste ti vyvolení.'"); typed = ""; }
         });
     </script>
 </body>
