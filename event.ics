@@ -8,7 +8,7 @@ DTSTAMP:20270101T000000Z
 DTSTART;TZID=Europe/Prague:20270312T190000
 DTEND;TZID=Europe/Prague:20270313T020000
 SUMMARY:Maturitní ples 8.A8 // THE MATRIX
-DESCRIPTION:Vstup do simulace. Maturitní ples třídy 8.A8 Gymnázia Kolín.
+DESCRIPTION:Maturitní ples třídy 8.A8 Gymnázia Kolín.
 LOCATION:MSD Kolín, Zámecká 109, 280 02 Kolín
 STATUS:CONFIRMED
 END:VEVENT
