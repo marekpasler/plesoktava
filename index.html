@@ -85,7 +85,7 @@
         }
 
         h1 {
-            font-size: clamp(3.5rem, 10vw, 6rem); /* Výrazně větší pro filmový dojem */
+            font-size: clamp(3.5rem, 10vw, 6rem);
             font-weight: 800;
             letter-spacing: 2px;
             margin-bottom: 16px;
@@ -101,15 +101,90 @@
             letter-spacing: 0.8em;
             font-weight: 400;
             margin-bottom: -5px;
-            margin-left: 0.8em; /* Kompenzace mezery pro přesné centrování */
+            margin-left: 0.8em;
             color: #ffffff;
-            -webkit-text-fill-color: #ffffff; /* Přepíše gradient z H1 */
+            -webkit-text-fill-color: #ffffff;
         }
 
         .subtitle {
             color: var(--text-muted);
             font-size: 1.1rem;
             font-family: 'Fira Code', monospace;
+        }
+
+        /* Unified Save The Date Dropdown */
+        .calendar-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-top: 18px;
+        }
+
+        .btn-save-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 255, 102, 0.08);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);
+        }
+
+        .btn-save-date:hover {
+            background: rgba(0, 255, 102, 0.2);
+            box-shadow: 0 0 25px var(--primary-glow);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .cal-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #08120c;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 6px;
+            z-index: 100;
+            width: 210px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary-glow);
+        }
+
+        .cal-menu.show {
+            display: block;
+        }
+
+        .cal-menu a, .cal-menu button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            text-align: center;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .cal-menu a:hover, .cal-menu button:hover {
+            background: rgba(0, 255, 102, 0.15);
+            color: var(--primary);
         }
 
         /* Main CTA Card */
@@ -395,10 +470,23 @@
             </div>
             <h1><span class="the-text">THE</span>MATRIX</h1>
             <div class="subtitle">MATURITNÍ PLES 8.A8 // 12. BŘEZNA 2027</div>
+            
+            <!-- Save The Date Dropdown -->
+            <div class="calendar-dropdown">
+                <button class="btn-save-date" onclick="toggleCalMenu(event)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    SAVE THE DATE
+                </button>
+                <div class="cal-menu" id="calMenu">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Maturitn%C3%AD+ples+8.A8+%2F%2F+THE+MATRIX&dates=20270312T180000Z/20270313T010000Z&details=Vstup+do+simulace.+Maturitn%C3%AD+ples+tr%C3%ADdy+8.A8+Gymn%C3%A1zia+Kol%C3%ADn.&location=MSD+Kol%C3%ADn%2C+Z%C3%A1meck%C3%A1+109%2C+280+02+Kol%C3%ADn" target="_blank" rel="noopener">
+                        Google Calendar
+                    </a>
+                    <button onclick="downloadICS()">
+                        Apple Calendar
+                    </button>
+                </div>
+            </div>
         </header>
-
-        
-
 
         <!-- Main Instagram CTA -->
         <div class="cta-card">
@@ -632,6 +720,49 @@
                 typed = "";
             }
         });
+
+        // Toggle Save The Date Menu
+        function toggleCalMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('calMenu');
+            menu.classList.toggle('show');
+        }
+
+        window.addEventListener('click', () => {
+            const menu = document.getElementById('calMenu');
+            if (menu && menu.classList.contains('show')) {
+                menu.classList.remove('show');
+            }
+        });
+
+        // Download .ics Calendar File
+        function downloadICS() {
+            const icsContent = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "PRODID:-//8.A8 Gymnasium Kolin//Maturitni Ples//CS",
+                "CALSCALE:GREGORIAN",
+                "BEGIN:VEVENT",
+                "UID:ples-8a8-2027@gkolin.cz",
+                "DTSTAMP:20270101T000000Z",
+                "DTSTART:20270312T180000Z",
+                "DTEND:20270313T010000Z",
+                "SUMMARY:Maturitní ples 8.A8 // THE MATRIX",
+                "DESCRIPTION:Vstup do simulace. Maturitní ples třídy 8.A8 Gymnázia Kolín. Afterparty: Staré Lázně Kolín.",
+                "LOCATION:MSD Kolín\\, Zámecká 109\\, 280 02 Kolín",
+                "STATUS:CONFIRMED",
+                "END:VEVENT",
+                "END:VCALENDAR"
+            ].join("\r\n");
+
+            const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute("download", "Maturitni_Ples_8A8.ics");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
