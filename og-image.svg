@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#050807"/>
+  <path d="M0 0h1200v630H0z" fill="none" stroke="#00ff66" stroke-opacity=".4" stroke-width="2"/>
+  <text x="600" y="170" text-anchor="middle" fill="#00ff66" font-family="monospace" font-size="28" letter-spacing="12">8.A8 // MATURITNÍ PLES</text>
+  <text x="600" y="355" text-anchor="middle" fill="#e0f7ed" font-family="monospace" font-size="112" font-weight="700">THE MATRIX</text>
+  <text x="600" y="445" text-anchor="middle" fill="#00ff66" font-family="monospace" font-size="34">12. BŘEZNA 2027 // MSD KOLÍN</text>
+</svg>
