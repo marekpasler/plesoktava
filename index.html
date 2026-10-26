@@ -167,8 +167,6 @@
     }
     .hero-copy { position: relative; z-index: 2; grid-column: 1; grid-row: 1; }
 
-    .boot { margin: 0 0 22px; min-height: 1.5em; color: var(--mint); font: 500 13px/1.5 var(--mono); letter-spacing: .04em; }
-    .boot .caret { display: inline-block; width: .6em; height: 1.05em; margin-left: 2px; vertical-align: -2px; background: var(--mint); animation: blink 1s steps(1) infinite; }
     .eyebrow { margin: 0; color: var(--mint); font: 400 clamp(13px, 1.6vw, 17px)/1.3 var(--display); letter-spacing: .32em; text-transform: uppercase; }
     .title { margin: 18px 0 0; font-family: var(--display); font-weight: 800; line-height: .84; text-transform: uppercase; }
     .title-the { display: block; margin-left: .06em; color: var(--ivory); font-size: clamp(22px, 3.2vw, 40px); letter-spacing: .62em; }
@@ -412,7 +410,6 @@
         opacity: .9;
       }
       .hero-copy { padding-top: min(58vw, 300px); }
-      .boot { margin: 0 0 12px; font-size: 12px; }
       .poster { grid-template-columns: 1fr; }
       .poster-frame { max-width: 420px; }
       .lineup { grid-template-columns: 1fr; }
@@ -485,7 +482,6 @@
         </div>
 
         <div class="hero-copy">
-          <p class="boot" aria-hidden="true"><span id="bootText">&gt; připojeno</span><span class="caret"></span></p>
           <p class="eyebrow reveal" style="--i:0">Maturitní ples 8.A8</p>
           <h1 class="title reveal" style="--i:1">
             <span class="title-the">The</span>
@@ -557,7 +553,7 @@
           </div>
           <div>
             <dt>Afterparty</dt>
-            <dd><span class="v">Pokračování simulace</span><span class="s">Afterparty proběhne po plese v klubu Staré Lázně Kolín.</span></dd>
+            <dd><span class="v">Pokračování večera</span><span class="s">Afterparty proběhne po plese v klubu Staré Lázně Kolín.</span></dd>
           </div>
         </dl>
       </section>
@@ -708,19 +704,6 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
       cd.s.textContent = p(sec % 60);
     }
     tick(); cdTimer = setInterval(tick, 1000);
-
-    /* ---------- Boot text ---------- */
-    const bootEl = $('#bootText');
-    if (!reduceMotion.matches) {
-      const lines = ['> navazuji spojení…', '> dešifruji pozvánku…', '> připojeno'];
-      let li = 0, ci = 0;
-      bootEl.textContent = '';
-      (function type() {
-        const line = lines[li];
-        if (ci <= line.length) { bootEl.textContent = line.slice(0, ci++); setTimeout(type, 26); }
-        else if (li < lines.length - 1) { setTimeout(() => { li++; ci = 0; type(); }, 420); }
-      })();
-    }
 
     /* ---------- Dešifrování nadpisů ---------- */
     const GLYPHS = 'アカサタナハマヤラワ01ABCDEFX8#$%&';
