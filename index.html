@@ -230,7 +230,8 @@
     .panel .muted { color: #a7bdb2; }
 
     /* Afterparty: hlavní je místo, ne nadpis */
-    .venue { margin-top: 14px; font: 900 clamp(64px, 17vw, 168px)/.84 var(--display); color: var(--mint); text-transform: uppercase; }
+    /* line-height ≥ 1: velká písmena s háčky a čárkami (É, Ě, Í) jinak lezou do řádku nad nimi */
+    .venue { margin-top: .22em; font: 900 clamp(64px, 17vw, 168px)/1.02 var(--display); color: var(--mint); text-transform: uppercase; text-wrap: balance; }
 
     /* Tablo: 28 oválných rámečků, do kterých později přijdou fotky */
     .tablo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 2.4vw, 22px); margin: 32px 0 0; padding: 0; list-style: none; }
