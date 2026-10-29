@@ -8,6 +8,7 @@
   <title>THE MATRIX — Maturitní ples 8.A8 · Gymnázium Kolín</title>
   <meta name="description" content="Maturitní ples třídy 8.A8 Gymnázia Kolín. Pátek 12. března 2027 od 19:00, MSD Kolín. Hraje Paragraf 202, moderuje Petr Zalda. Vstupné 370 Kč.">
   <link rel="canonical" href="https://8a8.gkolin.cz/">
+  <script>document.documentElement.classList.add('js');</script>
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Ctext x='9' y='44' fill='%235EFFC4' font-family='monospace' font-weight='700' font-size='32'%3E%26gt;_%3C/text%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -28,11 +29,9 @@
   <meta name="twitter:description" content="Pátek 12. 3. 2027 · 19:00 · MSD Kolín. Hraje Paragraf 202.">
   <meta name="twitter:image" content="https://8a8.gkolin.cz/og-image.jpg">
 
-  <link rel="preload" href="assets/fonts/oxanium-800.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/oxanium-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" type="image/webp" href="assets/img/portrait-800.webp"
-        imagesrcset="assets/img/portrait-800.webp 800w, assets/img/portrait-1400.webp 1400w"
-        imagesizes="(min-width: 900px) 50vw, 100vw" fetchpriority="high">
+  <link rel="preload" href="assets/fonts/big-shoulders-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/big-shoulders-latin-ext-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" type="image/webp" href="assets/img/portrait-800.webp" fetchpriority="high">
 
   <script type="application/ld+json">
   {
@@ -63,442 +62,293 @@
   </script>
 
   <style>
-    @font-face { font-family: "Oxanium"; src: url("assets/fonts/oxanium-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-    @font-face { font-family: "Oxanium"; src: url("assets/fonts/oxanium-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-    @font-face { font-family: "Oxanium"; src: url("assets/fonts/oxanium-800.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+    /* Big Shoulders (variabilní 400–900), latin + latin-ext kvůli češtině */
+    @font-face { font-family: "Big Shoulders"; src: url("assets/fonts/big-shoulders-latin-var.woff2") format("woff2"); font-weight: 400 900; font-display: swap;
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: "Big Shoulders"; src: url("assets/fonts/big-shoulders-latin-ext-var.woff2") format("woff2"); font-weight: 400 900; font-display: swap;
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
     @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/jetbrains-mono-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
     @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/jetbrains-mono-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-    @font-face { font-family: "IBM Plex Sans"; src: url("assets/fonts/ibm-plex-sans-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-    @font-face { font-family: "IBM Plex Sans"; src: url("assets/fonts/ibm-plex-sans-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
 
     :root {
       color-scheme: dark;
-      /* Paleta převzatá z plakátu */
-      --bg: #000;
-      --bg-2: #040907;
-      --surface: rgba(6, 14, 11, .82);
-      --line: rgba(94, 255, 196, .16);
-      --line-hot: rgba(94, 255, 196, .5);
-      --mint: #5effc4;          /* text a data z plakátu (datum, info) */
-      --cyan: #00f5d4;          /* záře titulku z plakátu */
-      --ivory: #e9f2ec;
-      --muted: #93aba0;
-      --red: #e0102f;           /* červená pilulka — odlesk v brýlích na plakátu */
-      --red-hot: #ff2d4a;
-      --display: "Oxanium", ui-sans-serif, system-ui, sans-serif;
-      --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
-      --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-      --gutter: clamp(16px, 4vw, 40px);
+      /* Paleta z plakátu: černá, slonová kost, mátová (+ její tmavý odstín pro rastr) */
+      --black: #000;
+      --ivory: #efe9da;
+      --mint: #5effc4;
+      --mint-deep: #1e5c47;
+      --muted: #8fa79c;
+      --line: rgba(239, 233, 218, .16);
+      --display: "Big Shoulders", "Arial Narrow", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+      --gutter: clamp(16px, 4.5vw, 56px);
       --safe-b: env(safe-area-inset-bottom, 0px);
-      --ease: cubic-bezier(.2, .7, .2, 1);
+      --ease-out: cubic-bezier(.16, 1, .3, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-    html { background: var(--bg); scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    html { background: var(--black); -webkit-text-size-adjust: 100%; scrollbar-color: var(--mint-deep) var(--black); }
     body {
       margin: 0; min-width: 320px; overflow-x: hidden;
-      background: var(--bg); color: var(--ivory);
-      font: 400 16px/1.6 var(--sans);
-      -webkit-font-smoothing: antialiased;
+      background: var(--black); color: var(--ivory);
+      font: 400 20px/1.4 var(--display); letter-spacing: .01em;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     }
     img { display: block; max-width: 100%; }
-    a { color: inherit; }
+    a { color: inherit; text-underline-offset: .18em; text-decoration-thickness: 1px; }
     button, input { font: inherit; color: inherit; }
     button, a, summary { -webkit-tap-highlight-color: transparent; }
-    :focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; border-radius: 4px; }
-    ::selection { background: var(--mint); color: #000; }
+    :focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
+    ::selection { background: var(--mint); color: var(--black); }
+    h1, h2, h3, p { margin: 0; }
+    h2 { text-wrap: balance; }
+    p { text-wrap: pretty; line-height: 1.4; }
 
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    .skip-link {
-      position: fixed; top: 8px; left: 8px; z-index: 50; padding: 10px 14px; border-radius: 8px;
-      background: var(--mint); color: #000; font-weight: 600; transform: translateY(-160%);
-    }
+    .skip-link { position: fixed; top: 8px; left: 8px; z-index: 60; padding: 12px 16px; background: var(--mint); color: var(--black); font-weight: 700; transform: translateY(-200%); }
     .skip-link:focus { transform: none; }
 
-    /* ---------- Atmosféra ---------- */
-    #rain { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; opacity: .26; transition: opacity 1.2s var(--ease); }
-    .matrix-mode #rain { opacity: .75; }
-    .crt {
-      position: fixed; inset: 0; z-index: 40; pointer-events: none;
-      background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.28) 3px, transparent 4px);
-      mix-blend-mode: multiply; opacity: .55;
-    }
-    .vignette { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(0,0,0,.75) 100%); }
+    .wrap { width: min(100% - 2 * var(--gutter), 1240px); margin-inline: auto; }
 
-    .wrap { position: relative; z-index: 2; width: min(100% - 2 * var(--gutter), 1180px); margin-inline: auto; }
+    /* ---------- Hlavička ---------- */
+    .top { position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; min-height: 60px; }
+    .logo { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; font: 900 26px/1 var(--display); text-decoration: none; user-select: none; }
+    .ig { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: 18px; text-decoration: none; }
+    .ig:hover { color: var(--mint); }
 
-    /* ---------- Horní lišta ---------- */
-    .topbar {
-      position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      min-height: 64px; font: 500 12px/1 var(--mono); letter-spacing: .12em; color: var(--muted);
+    /* ---------- Úvod: rastrový portrét + titulek ---------- */
+    .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); }
+    /* Portrét v plném poměru stran (800 × 716), nic se neořezává; okraje doznívají do černé */
+    .plate {
+      position: relative; margin-inline: calc(-1 * var(--gutter)); aspect-ratio: 800 / 716; overflow: hidden;
+      touch-action: pan-y;
+      -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
+              mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
     }
-    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--mint); }
-    .brand-mark {
-      display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line-hot); border-radius: 9px;
-      font: 700 13px/1 var(--mono); letter-spacing: 0; user-select: none;
-    }
-    .brand-school { color: var(--muted); }
-    .top-right { display: flex; align-items: center; gap: 14px; }
-    .status { display: inline-flex; align-items: center; gap: 8px; }
-    .led { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 10px var(--mint); }
-    @keyframes blink { 50% { opacity: .25; } }
-    .icon-btn {
-      display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; cursor: pointer;
-      border: 1px solid var(--line); border-radius: 12px; background: rgba(0,0,0,.5); color: var(--mint);
-      transition: border-color .2s, background .2s;
-    }
-    .icon-btn:hover { border-color: var(--mint); background: rgba(94,255,196,.08); }
-    .icon-btn svg { width: 20px; height: 20px; }
+    .plate img, .plate canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .plate img { object-fit: cover; object-position: 50% 22%; }
+    .plate canvas { transition: opacity .9s; }
+    /* S JS se portrét nejdřív poskládá ze znaků a pak se z nich vynoří (rozmazání + zoom jako původně) */
+    .js .plate img { opacity: 0; transform: scale(1.04); filter: blur(6px); transition: opacity 1.2s, transform 1.6s var(--ease-out), filter 1.2s; }
+    .js .plate.revealed img { opacity: 1; transform: none; filter: none; }
+    .plate.revealed canvas { opacity: 0; }
+    .plate.lens canvas { opacity: 1; transition: none; }
 
-    /* ---------- Hero ---------- */
-    .hero {
-      position: relative; display: grid; align-items: center;
-      grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
-      min-height: min(calc(100svh - 64px), 900px); padding-block: 24px 56px;
-    }
-    .hero-art { position: relative; grid-column: 2; grid-row: 1; align-self: stretch; pointer-events: none; }
-    .hero-art img {
-      /* Celý portrét (contain) posunutý doprava; maska doznívá až k okraji boxu, takže nikde není ostrý ořez */
-      position: absolute; top: 50%; right: -10%; width: 122%; height: auto; max-width: none;
-      aspect-ratio: 1400 / 1253; translate: 0 -50%;
-      -webkit-mask-image: radial-gradient(closest-side at 50% 50%, #000 72%, transparent 100%);
-              mask-image: radial-gradient(closest-side at 50% 50%, #000 72%, transparent 100%);
-      filter: saturate(1.05) contrast(1.05);
-    }
-    .hero-copy { position: relative; z-index: 2; grid-column: 1; grid-row: 1; }
+    .hero-copy { position: relative; z-index: 2; margin-top: -0.62em; font-size: clamp(96px, 32vw, 300px); line-height: 1; }
+    .hero-copy > :not(.title) { font-size: 20px; line-height: 1.3; }
+    /* text leží přes portrét: myš propustíme na portrét, klikat jde jen na samotné prvky */
+    .hero-copy { pointer-events: none; }
+    .hero-copy > * { pointer-events: auto; }
+    .hero-copy > .title { pointer-events: none; }
+    .title { font: 900 1em/.78 var(--display); text-transform: uppercase; letter-spacing: -.01em; }
+    .title .the { display: block; margin: 0 0 .12em .03em; font-size: clamp(18px, 5.4vw, 51px); font-weight: 800; letter-spacing: .5em; }
+    .title .main { display: block; margin-left: -.035em; }
+    .title .char { display: inline-block; }
 
-    .eyebrow { margin: 0; color: var(--mint); font: 400 clamp(13px, 1.6vw, 17px)/1.3 var(--display); letter-spacing: .32em; text-transform: uppercase; }
-    .title { margin: 18px 0 0; font-family: var(--display); font-weight: 800; line-height: .84; text-transform: uppercase; }
-    .title-the { display: block; margin-left: .06em; color: var(--ivory); font-size: clamp(22px, 3.2vw, 40px); letter-spacing: .62em; }
-    .title-main {
-      display: block; margin-top: .08em; margin-left: -.04em; color: var(--ivory);
-      font-size: clamp(64px, 12.4vw, 168px); letter-spacing: -.01em;
-      text-shadow: 0 0 22px rgba(0,245,212,.55), 0 0 70px rgba(0,245,212,.28);
-    }
-    .tagline { margin: 22px 0 0; color: var(--ivory); font: 400 clamp(17px, 2vw, 21px)/1.45 var(--sans); }
-    .tagline em { font-style: normal; color: var(--mint); }
-    .facts {
-      display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; padding: 0; list-style: none;
-      color: var(--mint); font: 700 clamp(15px, 1.7vw, 19px)/1.3 var(--display); letter-spacing: .08em; text-transform: uppercase;
-    }
-    .facts li { display: inline-flex; align-items: center; gap: 18px; }
-    .facts li + li::before { content: ""; width: 5px; height: 5px; margin-left: -12px; margin-right: -6px; background: var(--line-hot); transform: rotate(45deg); }
+    .datum { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: 18px; font-size: 20px; }
+    .datum .big { font: 800 clamp(64px, 19vw, 132px)/.82 var(--display); color: var(--mint); letter-spacing: -.01em; }
+    .datum .big span { color: var(--mint-deep); font-weight: 400; margin: 0 .04em; }
+    .datum .when { text-align: right; line-height: 1.3; }
+    .datum .when b { display: block; font: 700 26px/1.1 var(--mono); color: var(--ivory); letter-spacing: -.02em; }
 
-    /* z-index: menu kalendáře musí ležet nad odpočtem (oba mají kvůli .reveal vlastní vrstvu) */
-    .actions { position: relative; z-index: 10; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; margin-top: 30px; }
-    .pill {
-      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      min-height: 54px; padding: 0 26px; border: 1px solid var(--line-hot); border-radius: 999px;
-      background: rgba(0,0,0,.55); color: var(--ivory); text-decoration: none; white-space: nowrap;
-      font: 700 16px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; cursor: pointer;
-      transition: transform .25s var(--ease), box-shadow .25s, background .25s, border-color .25s;
+    .who { margin-top: 22px; font-size: 22px; line-height: 1.3; }
+    .who b { font-weight: 800; }
+    .slogan { margin-top: 14px; color: var(--muted); font-size: 22px; }
+
+    .actions { position: relative; z-index: 10; display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 28px; max-width: 520px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 56px; padding: 0 22px; border: 2px solid var(--ivory); background: transparent; color: var(--ivory);
+      font: 800 21px/1 var(--display); text-decoration: none; cursor: pointer;
+      transition-property: background-color, color, border-color, transform; transition-duration: .15s; transition-timing-function: ease-out;
     }
-    .pill svg { width: 19px; height: 19px; flex: none; }
-    .pill:hover { border-color: var(--mint); background: rgba(94,255,196,.08); }
-    .pill:active { transform: scale(.97); }
-    .pill-red {
-      /* tmavší přechod: bílý text drží kontrast WCAG AA (≥ 4,5:1) */
-      border-color: transparent; background: linear-gradient(180deg, var(--red), #b80c26); color: #fff;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -2px 0 rgba(0,0,0,.18), 0 0 0 1px rgba(255,45,74,.4), 0 10px 34px rgba(224,16,47,.35);
-    }
-    .pill-red:hover { background: linear-gradient(180deg, #e81232, var(--red)); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 1px rgba(255,45,74,.6), 0 12px 40px rgba(224,16,47,.5); }
-    .pill-red:hover, .pill-red:focus-visible { animation: glitch .32s steps(2) 1; }
-    @keyframes glitch {
-      0% { transform: translate(0); text-shadow: none; }
-      33% { transform: translate(-2px, 1px); text-shadow: 2px 0 var(--cyan), -2px 0 #000; }
-      66% { transform: translate(2px, -1px); text-shadow: -2px 0 var(--cyan); }
-      100% { transform: translate(0); text-shadow: none; }
-    }
-    .pill-icon { width: 54px; padding: 0; }
+    .btn:hover { background: var(--ivory); color: var(--black); }
+    .btn:active { transform: scale(.97); }
+    .btn-main { width: 100%; border-color: var(--mint); background: var(--mint); color: var(--black); }
+    .btn-main:hover { background: var(--ivory); border-color: var(--ivory); }
+    .btn svg { width: 20px; height: 20px; flex: none; }
 
     .calendar { position: relative; }
-    .calendar > summary { list-style: none; }
+    .calendar > summary { display: flex; list-style: none; }
     .calendar > summary::-webkit-details-marker { display: none; }
-    .menu {
-      position: absolute; top: calc(100% + 8px); left: 0; z-index: 20; min-width: 250px; padding: 6px;
-      border: 1px solid var(--line-hot); border-radius: 14px; background: #030806;
-      box-shadow: 0 18px 50px rgba(0,0,0,.8), 0 0 30px rgba(94,255,196,.08);
-    }
-    .menu a {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 14px;
-      border-radius: 9px; text-decoration: none; font: 500 15px/1.2 var(--sans);
-    }
-    .menu a span { color: var(--muted); font: 12px var(--mono); }
-    .menu a:hover, .menu a:focus-visible { background: rgba(94,255,196,.1); color: var(--mint); }
+    .menu { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 20; background: var(--black); border: 2px solid var(--mint); }
+    .menu a { display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: 0 16px; font-size: 21px; font-weight: 700; text-decoration: none; }
+    .menu a + a { border-top: 1px solid var(--line); }
+    .menu a span { color: var(--muted); font: 400 15px var(--mono); }
+    .menu a:hover, .menu a:focus-visible { background: var(--mint); color: var(--black); }
+    .menu a:hover span, .menu a:focus-visible span { color: var(--black); }
+    .row2 { display: flex; gap: 10px; }
 
-    .countdown { margin-top: 34px; }
-    .countdown-label { margin: 0 0 10px; color: var(--muted); font: 500 11px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; }
-    .countdown-row { display: flex; align-items: baseline; gap: clamp(10px, 2vw, 22px); font-family: var(--mono); font-variant-numeric: tabular-nums; }
-    .cd { display: flex; align-items: baseline; gap: 5px; }
-    .cd b { color: var(--mint); font-size: clamp(28px, 4.2vw, 46px); font-weight: 700; line-height: 1; text-shadow: 0 0 18px rgba(94,255,196,.35); }
-    .cd small { color: var(--muted); font-size: 12px; letter-spacing: .1em; }
-    .cd-sep { color: var(--line-hot); font-size: clamp(20px, 3vw, 32px); }
-    .countdown-done { color: var(--mint); font: 700 clamp(20px, 3vw, 30px)/1.2 var(--display); letter-spacing: .06em; }
+    .countdown { margin-top: 40px; }
+    .countdown-label { color: var(--muted); font-size: 18px; }
+    .cd-row { display: flex; gap: clamp(14px, 4vw, 40px); margin-top: 6px; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    .cd b { display: block; font-size: clamp(34px, 9vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -.04em; }
+    .cd small { display: block; margin-top: 4px; color: var(--muted); font: 400 16px var(--display); }
+    .countdown-done { font: 800 clamp(30px, 8vw, 48px)/1 var(--display); color: var(--mint); }
 
-    /* Úvodní „boot“ animace */
-    .reveal { opacity: 0; transform: translateY(14px); animation: rise .8s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 90ms + 350ms); }
-    .hero-art img { opacity: 0; animation: fadeArt 1.6s var(--ease) .15s forwards; }
-    @keyframes rise { to { opacity: 1; transform: none; } }
-    @keyframes fadeArt { from { opacity: 0; transform: scale(1.04); filter: blur(6px) saturate(1.05); } to { opacity: 1; transform: none; filter: saturate(1.05) contrast(1.05); } }
+    /* ---------- Rastrový pás mezi sekcemi ---------- */
+    .raster {
+      height: 72px; margin: clamp(64px, 12vw, 128px) calc(-1 * var(--gutter)) 0;
+      /* rastrové tečky jako dlaždice 9×9 px (SVG kruh, barva --mint-deep) */
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9'%3E%3Ccircle cx='4.5' cy='4.5' r='1.6' fill='%231e5c47'/%3E%3C/svg%3E") 0 0 / 9px 9px;
+      -webkit-mask-image: linear-gradient(to right, #000, transparent 78%);
+              mask-image: linear-gradient(to right, #000, transparent 78%);
+    }
+    .raster.flip { -webkit-mask-image: linear-gradient(to left, #000, transparent 78%); mask-image: linear-gradient(to left, #000, transparent 78%); }
 
     /* ---------- Sekce ---------- */
-    section { scroll-margin-top: 20px; }
-    .section { padding-block: clamp(64px, 10vw, 128px) 0; }
-    .kicker { margin: 0; color: var(--mint); font: 500 12px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; }
-    .kicker::before { content: "▸ "; }
-    .h2 {
-      margin: 14px 0 0; max-width: 18ch; color: var(--ivory);
-      font: 800 clamp(34px, 5.4vw, 64px)/.98 var(--display); letter-spacing: -.01em; text-transform: uppercase;
-    }
-    .lead { max-width: 56ch; margin: 18px 0 0; color: var(--muted); font-size: 17px; }
+    section { scroll-margin-top: 24px; padding-top: clamp(48px, 9vw, 96px); }
+    .h2 { font: 800 clamp(52px, 14vw, 112px)/.86 var(--display); letter-spacing: -.005em; }
+    .h2-sm { font: 800 clamp(34px, 8vw, 56px)/.95 var(--display); }
+    .text { max-width: 32ch; margin-top: 18px; font-size: clamp(22px, 1.7vw, 26px); line-height: 1.4; }
+    .text + .text { margin-top: 10px; }
+    .muted { color: var(--muted); }
+    .link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 6px; color: var(--mint); font-weight: 700; }
+    .link:hover { color: var(--ivory); }
 
-    /* Briefing — datový list */
-    .brief { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 40px 0 0; border-top: 1px solid var(--line); }
-    .brief > div {
-      display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 16px; align-items: baseline;
-      padding: 22px 0; border-bottom: 1px solid var(--line);
-    }
-    .brief > div:nth-child(odd) { padding-right: 32px; }
-    .brief > div:nth-child(even) { padding-left: 32px; border-left: 1px solid var(--line); }
-    .brief dt { color: var(--muted); font: 500 12px/1.6 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
-    .brief dd { margin: 0; }
-    .brief .v { display: block; color: var(--ivory); font: 700 clamp(19px, 2vw, 23px)/1.25 var(--display); letter-spacing: .02em; }
-    .brief .s { display: block; margin-top: 4px; color: var(--muted); font-size: 15px; }
-    .text-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--mint); font: 500 14px var(--mono); text-underline-offset: 4px; }
-    .text-link:hover { color: var(--ivory); }
+    /* Kdy a kde: časy jako plakátový sloupec */
+    .times { display: grid; gap: 2px; margin-top: 28px; }
+    .times div { display: flex; align-items: baseline; gap: 18px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .times b { flex: none; width: 3.2em; font: 700 30px/1 var(--mono); color: var(--mint); letter-spacing: -.03em; }
+    .times span { font-size: 24px; line-height: 1.3; }
+    .times .later b { color: var(--mint-deep); }
+    .times .later span { color: var(--muted); }
 
-    /* Vstupenky — lístek */
-    .ticket {
-      position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; margin-top: 40px;
-      border: 1px solid var(--line-hot); border-radius: 22px; overflow: hidden;
-      background: linear-gradient(120deg, rgba(94,255,196,.09), rgba(0,0,0,.4) 55%), var(--bg-2);
-    }
-    .ticket::before, .ticket::after { /* výseky lístku */
-      content: ""; position: absolute; right: 236px; width: 28px; height: 28px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line-hot);
-    }
-    .ticket::before { top: -15px; } .ticket::after { bottom: -15px; }
-    .ticket-main { padding: clamp(24px, 4vw, 44px); }
-    .ticket-main h3 { margin: 0; font: 800 clamp(24px, 3vw, 34px)/1.1 var(--display); text-transform: uppercase; }
-    .ticket-main p { margin: 12px 0 0; max-width: 46ch; color: var(--muted); }
-    .ticket-main strong { color: var(--ivory); font-weight: 600; }
-    .ticket-stub {
-      display: grid; align-content: center; justify-items: center; width: 250px; padding: 24px;
-      border-left: 2px dashed var(--line-hot); text-align: center;
-    }
-    .price { color: var(--mint); font: 800 64px/1 var(--display); text-shadow: 0 0 26px rgba(94,255,196,.35); }
-    .price small { font-size: .42em; letter-spacing: .04em; }
-    .stub-label { margin-top: 8px; color: var(--muted); font: 500 11px/1.4 var(--mono); letter-spacing: .18em; text-transform: uppercase; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 8px 12px; border-radius: 999px;
-      border: 1px solid var(--line); background: rgba(94,255,196,.06); color: var(--mint); font: 500 12px/1 var(--mono); letter-spacing: .08em;
-    }
+    /* Vstupné: cena jako na plakátu, sloupec se přizpůsobí šířce ceny */
+    .ticket-split { display: grid; gap: 20px; }
+    .price { font: 900 clamp(130px, 38vw, 300px)/.78 var(--display); color: var(--mint); letter-spacing: -.02em; margin-left: -.03em; white-space: nowrap; }
 
-    /* Program */
-    .lineup { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
-    .act { padding: clamp(22px, 3vw, 34px); border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
-    .act-role { color: var(--muted); font: 500 12px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; }
-    .act-name { margin: 14px 0 0; color: var(--ivory); font: 800 clamp(30px, 4.4vw, 52px)/1 var(--display); text-transform: uppercase; }
-    .act-name span { color: var(--mint); }
-    .timeline { margin: 16px 0 0; padding: 0 24px; list-style: none; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
-    .timeline li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 18px; align-items: center; min-height: 64px; padding: 12px 0; }
-    .timeline li + li { border-top: 1px solid var(--line); }
-    .t-time { color: var(--mint); font: 700 18px/1 var(--mono); }
-    .t-what { color: var(--ivory); font: 600 17px/1.3 var(--sans); }
-    .redacted { display: inline-block; height: .95em; vertical-align: -2px; border-radius: 2px; background: repeating-linear-gradient(90deg, rgba(94,255,196,.35) 0 6px, rgba(94,255,196,.18) 6px 12px); }
-    .t-note { color: var(--muted); font: 500 12px/1.7 var(--mono); letter-spacing: .12em; }
+    /* Program: jména jsou hlavní, nadpis sekce je menší */
+    .acts { margin-top: 24px; display: grid; gap: 26px; }
+    .act small { display: block; margin-bottom: 4px; color: var(--mint); font-size: 22px; }
+    .act b { display: block; font: 900 clamp(48px, 13vw, 104px)/.88 var(--display); text-transform: uppercase; }
 
-    /* Třída — 28 identit */
-    .nodes { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 6px; margin-top: 40px; }
-    .node {
-      position: relative; display: grid; place-items: center; aspect-ratio: 1; padding: 0; cursor: pointer;
-      border: 1px solid var(--line); border-radius: 8px; background: rgba(4,10,8,.75);
-      color: var(--mint); font: 700 clamp(12px, 1.4vw, 16px)/1 var(--mono);
-      transition: border-color .2s, background .2s, color .2s;
-    }
-    .node:hover, .node:focus-visible, .node.on { border-color: var(--mint); background: rgba(94,255,196,.1); }
-    .node.on { color: #000; background: var(--mint); }
-    .nodes-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; margin-top: 14px; color: var(--muted); font: 500 12px/1.5 var(--mono); letter-spacing: .1em; }
-    .nodes-meta output { color: var(--mint); }
+    /* Dresscode: světlý panel přes celou šířku, ať se rytmus stránky zlomí */
+    .panel { margin-inline: calc(50% - 50vw); padding: 56px 20px; background: #0f2f25; color: var(--ivory); }
+    @media (min-width: 900px) { .panel { padding: 88px 56px; } }
+    .panel > .split { max-width: 1240px; margin-inline: auto; }
+    .panel .muted { color: #a7bdb2; }
+
+    /* Afterparty: hlavní je místo, ne nadpis */
+    .venue { margin-top: 14px; font: 900 clamp(64px, 17vw, 168px)/.84 var(--display); color: var(--mint); text-transform: uppercase; }
+
+    /* Tablo: 28 oválných rámečků, do kterých později přijdou fotky */
+    .tablo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 2.4vw, 22px); margin: 32px 0 0; padding: 0; list-style: none; }
+    .tablo li { position: relative; aspect-ratio: 3 / 4; border-radius: 50%; overflow: hidden; outline: 1px solid var(--line); outline-offset: 4px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7'%3E%3Ccircle cx='3.5' cy='3.5' r='1.1' fill='%231e5c47'/%3E%3C/svg%3E") 0 0 / 7px 7px; }
+    .tablo img { width: 100%; height: 100%; object-fit: cover; }
+    .tablo .n { position: absolute; inset: auto 0 14%; text-align: center; color: var(--muted); font: 400 14px var(--mono); }
+    .tablo img + .n { display: none; }
 
     /* Plakát */
-    .poster { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); gap: clamp(28px, 6vw, 80px); align-items: center; }
-    .poster-frame {
-      position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line-hot);
-      box-shadow: 0 30px 80px rgba(0,0,0,.7), 0 0 60px rgba(0,245,212,.12);
-      transform: rotate(-1.5deg); transition: transform .5s var(--ease);
-    }
-    .poster-frame:hover { transform: rotate(0) scale(1.01); }
-    .poster-frame img { width: 100%; height: auto; aspect-ratio: 2480 / 3508; }
-    .poster .actions { margin-top: 26px; }
+    .poster { display: grid; gap: 24px; }
+    .poster a.frame { display: block; max-width: 440px; outline: 1px solid rgba(255,255,255,.1); outline-offset: -1px; }
+    .poster img { width: 100%; height: auto; aspect-ratio: 800 / 1131; }
 
-    /* Terminál pás */
-    .term-band {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
-      margin-top: clamp(64px, 10vw, 120px); padding: 20px clamp(18px, 3vw, 28px);
-      border: 1px dashed var(--line-hot); border-radius: 16px; background: rgba(0,0,0,.6);
-      font: 500 15px/1.5 var(--mono); color: var(--muted);
-    }
-    .term-band b { color: var(--mint); font-weight: 700; }
-    .term-band button { min-height: 48px; padding: 0 18px; border: 1px solid var(--line-hot); border-radius: 12px; background: transparent; color: var(--mint); cursor: pointer; font: 700 14px var(--mono); }
-    .term-band button:hover { background: rgba(94,255,196,.08); }
-
-    footer {
-      margin-top: 56px; padding: 28px 0 calc(36px + var(--safe-b)); border-top: 1px solid var(--line);
-      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px;
-      color: var(--muted); font: 500 12px/1.6 var(--mono); letter-spacing: .08em;
-    }
-    footer a { color: var(--mint); text-underline-offset: 3px; }
-
-    /* Dešifrování nadpisů */
-    [data-decrypt].scrambling { color: var(--mint); }
+    footer { display: grid; gap: 10px; margin-top: clamp(80px, 14vw, 160px); padding: 26px 0 calc(32px + var(--safe-b)); border-top: 1px solid var(--line); color: var(--muted); font-size: 18px; }
+    footer .spoon { color: var(--ivory); font-size: clamp(30px, 8vw, 56px); font-weight: 800; line-height: .95; }
 
     /* ---------- Spodní lišta (mobil) ---------- */
     .dock {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: none;
-      padding: 10px var(--gutter) calc(10px + var(--safe-b));
-      background: linear-gradient(180deg, transparent, rgba(0,0,0,.92) 30%);
-      transform: translateY(110%); transition: transform .35s var(--ease);
+      padding: 10px var(--gutter) calc(10px + var(--safe-b)); background: var(--black); border-top: 1px solid var(--line);
+      transform: translateY(110%); transition: transform .3s var(--ease-out);
     }
     .dock.show { transform: none; }
-    .dock-inner { display: grid; grid-template-columns: 1fr 1fr 52px; gap: 8px; max-width: 520px; margin: 0 auto; }
-    .dock .pill { min-height: 50px; padding: 0 12px; font-size: 14px; }
-    .dock .pill-icon { width: 52px; }
+    .dock-inner { display: grid; grid-template-columns: 1fr auto; gap: 10px; max-width: 520px; margin: 0 auto; }
+    .dock .btn { min-height: 52px; }
 
-    /* ---------- Dialogy ---------- */
-    .dialog {
-      width: min(600px, calc(100% - 24px)); max-height: min(82svh, 620px); padding: 0; overflow: hidden;
-      border: 1px solid var(--line-hot); border-radius: 18px; background: #020604; color: var(--ivory);
-      box-shadow: 0 30px 120px #000, 0 0 60px rgba(94,255,196,.12);
-    }
-    .dialog::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(6px); }
-    .dialog-bar { display: flex; align-items: center; justify-content: space-between; min-height: 54px; padding: 6px 8px 6px 18px; border-bottom: 1px solid var(--line); color: var(--muted); font: 500 12px var(--mono); letter-spacing: .1em; }
-    .term-out { min-height: 200px; max-height: 44svh; overflow: auto; margin: 0; padding: 18px; color: #c9e6d8; font: 400 14px/1.7 var(--mono); white-space: pre-wrap; overscroll-behavior: contain; }
+    /* ---------- Dialogy (terminál, sdílení) ---------- */
+    .dialog { width: min(600px, calc(100% - 24px)); max-height: min(82svh, 620px); padding: 0; overflow: hidden; border: 2px solid var(--mint); background: var(--black); color: var(--ivory); }
+    .dialog::backdrop { background: rgba(0,0,0,.82); }
+    .dialog-bar { display: flex; align-items: center; justify-content: space-between; padding: 6px 6px 6px 16px; border-bottom: 1px solid var(--line); color: var(--muted); font: 400 14px var(--mono); }
+    .x { display: grid; place-items: center; width: 44px; height: 44px; border: 0; background: transparent; color: var(--ivory); font-size: 28px; line-height: 1; cursor: pointer; }
+    .x:hover { color: var(--mint); }
+    .term-out { min-height: 200px; max-height: 44svh; overflow: auto; margin: 0; padding: 16px; color: #cfe9dc; font: 400 14px/1.7 var(--mono); white-space: pre-wrap; overscroll-behavior: contain; }
     .term-out .c { color: var(--mint); }
-    .term-form { display: flex; align-items: center; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--line); font: 400 16px var(--mono); }
+    .term-chips { display: flex; gap: 6px; overflow-x: auto; padding: 0 16px 12px; scrollbar-width: none; }
+    .term-chips button { flex: none; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); background: transparent; color: var(--mint); font: 400 14px var(--mono); cursor: pointer; }
+    .term-form { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--line); font: 400 16px var(--mono); }
     .term-form label { color: var(--mint); white-space: nowrap; }
     .term-form input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; font: 400 16px var(--mono); caret-color: var(--mint); }
-    .term-chips { display: flex; gap: 6px; overflow-x: auto; padding: 0 18px 14px; scrollbar-width: none; }
-    .term-chips button { flex: none; min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--mint); font: 500 13px var(--mono); cursor: pointer; }
-    .share-body { padding: 20px 18px 22px; }
-    .share-body p { margin: 0 0 12px; color: var(--muted); font-size: 15px; }
-    .share-url { width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid var(--line-hot); border-radius: 10px; background: #000; color: var(--mint); font: 16px var(--mono); }
+    .share-body { padding: 18px 16px 20px; }
+    .share-body p { margin-bottom: 12px; color: var(--muted); }
+    .share-url { width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid var(--mint); background: var(--black); color: var(--mint); font: 16px var(--mono); }
 
-    .toast {
-      position: fixed; left: 50%; bottom: calc(84px + var(--safe-b)); z-index: 45; max-width: calc(100vw - 32px);
-      padding: 12px 18px; border: 1px solid var(--line-hot); border-radius: 12px; background: #021009; color: var(--mint);
-      font: 500 13px var(--mono); opacity: 0; transform: translate(-50%, 12px); pointer-events: none; transition: opacity .25s, transform .25s;
-    }
+    .toast { position: fixed; left: 50%; bottom: calc(88px + var(--safe-b)); z-index: 45; max-width: calc(100vw - 32px); padding: 12px 16px; background: var(--mint); color: var(--black); font-weight: 700; opacity: 0; transform: translate(-50%, 10px); pointer-events: none; transition: opacity .2s, transform .2s; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-    .flash { position: fixed; inset: 0; z-index: 48; pointer-events: none; background: var(--mint); opacity: 0; }
-    .flash.go { animation: flash .6s ease-out; }
-    @keyframes flash { 0% { opacity: .5; } 100% { opacity: 0; } }
+    /* Matrix mód (easter egg): déšť znaků jen po odemčení */
+    #rain { position: fixed; inset: 0; z-index: 40; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity .8s; }
+    .matrix-mode #rain { opacity: .55; }
 
-    /* ---------- Responzivita ---------- */
-    @media (max-width: 1000px) {
-      .brief { grid-template-columns: 1fr; }
-      .brief > div:nth-child(odd), .brief > div:nth-child(even) { padding-inline: 0; border-left: 0; }
-      .nodes { grid-template-columns: repeat(7, minmax(0, 1fr)); }
-    }
+    /* ---------- Širší obrazovky ---------- */
     @media (max-width: 899px) {
-      .hero { grid-template-columns: 1fr; min-height: 0; padding-block: 0 48px; }
-      .hero-art { grid-column: 1; grid-row: 1; position: absolute; inset: -64px calc(-1 * var(--gutter)) auto; height: min(118vw, 560px); }
-      .hero-art img {
-        inset: 0; top: 0; right: auto; width: 100%; height: 100%; aspect-ratio: auto; translate: none;
-        object-fit: cover; object-position: 50% 18%;
-        -webkit-mask-image: linear-gradient(180deg, transparent 4%, #000 24%, #000 46%, transparent 96%);
-                mask-image: linear-gradient(180deg, transparent 4%, #000 24%, #000 46%, transparent 96%);
-        opacity: .9;
-      }
-      .hero-copy { padding-top: min(58vw, 300px); }
-      .poster { grid-template-columns: 1fr; }
-      .poster-frame { max-width: 420px; }
-      .lineup { grid-template-columns: 1fr; }
       .dock { display: block; }
-      footer { padding-bottom: calc(100px + var(--safe-b)); }
+      footer { padding-bottom: calc(96px + var(--safe-b)); }
     }
-    @media (max-width: 640px) {
-      .brand-school, .status { display: none; }
-      .eyebrow { letter-spacing: .24em; }
-      .title-the { letter-spacing: .5em; }
-      .actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 54px; gap: 8px; }
-      .actions .pill { width: 100%; padding: 0 12px; font-size: 14px; letter-spacing: .04em; }
-      .calendar .menu { width: min(300px, calc(100vw - 2 * var(--gutter))); }
-      .brief > div { grid-template-columns: 1fr; gap: 6px; padding: 18px 0; }
-      .ticket { grid-template-columns: 1fr; }
-      .ticket::before, .ticket::after { right: auto; top: auto; bottom: auto; }
-      .ticket::before { left: -15px; top: calc(100% - 172px); } .ticket::after { right: -15px; top: calc(100% - 172px); left: auto; }
-      .ticket-stub { width: auto; border-left: 0; border-top: 2px dashed var(--line-hot); }
-      .timeline li { grid-template-columns: 70px minmax(0, 1fr); gap: 12px; }
-      .countdown-row { justify-content: space-between; gap: 0; }
-      .cd { flex-direction: column; align-items: flex-start; gap: 4px; }
-      .cd-sep { display: none; }
-      .poster .actions { grid-template-columns: 1fr 1fr; }
+    @media (min-width: 900px) {
+      .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: end; min-height: min(100svh - 60px, 940px); }
+      .plate { grid-column: 2; grid-row: 1; align-self: center; margin: 0 calc(-1 * var(--gutter)) 0 0;
+        -webkit-mask-image: radial-gradient(closest-side at 50% 50%, #000 72%, transparent 100%);
+                mask-image: radial-gradient(closest-side at 50% 50%, #000 72%, transparent 100%); }
+      .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+      .hero-copy { grid-column: 1 / -1; grid-row: 1; align-self: end; margin: 0 0 56px; font-size: clamp(170px, 19vw, 300px); }
+      .hero-copy > :not(.title) { max-width: 520px; }
+      .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
+      .acts { grid-template-columns: 1fr 1fr; }
+      .ticket-split { grid-template-columns: auto minmax(0, 1fr); gap: clamp(40px, 5vw, 96px); align-items: end; }
+      .price { font-size: clamp(170px, 16vw, 300px); }
+      .panel .split { align-items: center; }
+      .tablo { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+      .tablo .n { font-size: 15px; }
+      .poster { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: end; }
     }
     @media (max-width: 360px) {
-      .actions { grid-template-columns: 1fr 54px; }
-      .actions > .calendar { grid-column: 1 / -1; }
-      .facts { font-size: 14px; }
-    }
-    @media (hover: none) {
-      .poster-frame:hover { transform: rotate(-1.5deg); }
-      .pill-red:hover { animation: none; }
+      .datum .when b { font-size: 22px; }
+      .who, .slogan { font-size: 20px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
-      .reveal, .hero-art img { opacity: 1; transform: none; }
-      #rain { display: none; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Přeskočit na obsah</a>
   <canvas id="rain" aria-hidden="true"></canvas>
-  <div class="vignette" aria-hidden="true"></div>
-  <div class="crt" aria-hidden="true"></div>
-  <div class="flash" id="flash" aria-hidden="true"></div>
 
   <div class="wrap">
-    <nav class="topbar" aria-label="Hlavní navigace">
-      <a class="brand" href="#top" id="brand" aria-label="8.A8 — na začátek stránky">
-        <span class="brand-mark" aria-hidden="true">&gt;_</span>
-        <span>8.A8 <span class="brand-school">// GYMNÁZIUM KOLÍN</span></span>
-      </a>
-      <div class="top-right">
-        <span class="status"><span class="led" aria-hidden="true"></span>SYSTEM ONLINE</span>
-        <button class="icon-btn" id="terminalOpen" type="button" aria-label="Otevřít terminál" title="Terminál">
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7 5 5-5 5M12 17h7"/></svg>
-        </button>
-      </div>
+    <nav class="top" aria-label="Hlavní navigace">
+      <a class="logo" href="#top" id="brand" aria-label="8.A8, na začátek stránky">8.A8</a>
+      <a class="ig" href="https://www.instagram.com/8a8.gkolin/" target="_blank" rel="noopener noreferrer">@8a8.gkolin</a>
     </nav>
 
     <main id="main">
-      <!-- ============ HERO ============ -->
       <header class="hero" id="top">
-        <div class="hero-art">
-          <img src="assets/img/portrait-800.webp"
-               srcset="assets/img/portrait-800.webp 800w, assets/img/portrait-1400.webp 1400w"
-               sizes="(min-width: 900px) 50vw, 100vw" width="1400" height="1253"
-               alt="" fetchpriority="high" decoding="async">
+        <div class="plate" id="plate" aria-hidden="true">
+          <img src="assets/img/portrait-800.webp" width="800" height="716" alt="" fetchpriority="high" decoding="async">
+          <canvas id="halftone"></canvas>
         </div>
 
         <div class="hero-copy">
-          <p class="eyebrow reveal" style="--i:0">Maturitní ples 8.A8</p>
-          <h1 class="title reveal" style="--i:1">
-            <span class="title-the">The</span>
-            <span class="title-main">Matrix</span>
-            <span class="sr-only"> — maturitní ples třídy 8.A8, Gymnázium Kolín</span>
+          <h1 class="title" id="title">
+            <span class="the">The</span>
+            <span class="main">Matrix</span>
+            <span class="sr-only">, maturitní ples třídy 8.A8, Gymnázium Kolín</span>
           </h1>
-          <p class="tagline reveal" style="--i:2">Maturita je pouhá otázka <em>volby</em>.</p>
-          <ul class="facts reveal" style="--i:3" aria-label="Kdy a kde">
-            <li><time datetime="2027-03-12T19:00+01:00">Pá 12. 3. 2027 · 19:00</time></li>
-            <li>MSD Kolín</li>
-          </ul>
 
-          <div class="actions reveal" style="--i:4">
+          <div class="datum">
+            <time class="big" datetime="2027-03-12T19:00+01:00" aria-label="12. března 2027">12<span>|</span>3<span>|</span>27</time>
+            <p class="when">pátek<b>19:00</b></p>
+          </div>
+
+          <p class="who"><b>Maturitní ples 8.A8</b><br>Gymnázium Kolín, MSD Kolín</p>
+          <p class="slogan">Maturita je pouhá otázka volby.</p>
+
+          <div class="actions">
             <details class="calendar" id="calendar">
-              <summary class="pill pill-red">
-                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4m8-4v4M3 10h18"/></svg>
+              <summary class="btn btn-main">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><rect x="3" y="5" width="18" height="16"/><path d="M8 3v4m8-4v4M3 10h18"/></svg>
                 Uložit datum
               </summary>
               <div class="menu">
@@ -506,149 +356,129 @@
                 <a href="event.ics" download>Apple / Outlook <span>.ics</span></a>
               </div>
             </details>
-            <a class="pill" href="https://www.instagram.com/8a8.gkolin/" target="_blank" rel="noopener noreferrer">
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>
-              Instagram
-            </a>
-            <button class="pill pill-icon" type="button" data-share aria-label="Sdílet odkaz na ples" title="Sdílet">
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>
+            <button class="btn" type="button" data-share aria-label="Sdílet odkaz na ples">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v8h14v-8"/></svg>
+              Sdílet
             </button>
           </div>
 
-          <div class="countdown reveal" style="--i:5" id="countdown" aria-label="Odpočet do začátku plesu">
+          <div class="countdown" id="countdown" aria-label="Odpočet do začátku plesu">
             <p class="countdown-label">Do začátku plesu zbývá</p>
-            <div class="countdown-row" id="cdRow">
-              <span class="cd"><b id="d">---</b><small>DNÍ</small></span><span class="cd-sep" aria-hidden="true">:</span>
-              <span class="cd"><b id="h">--</b><small>HOD</small></span><span class="cd-sep" aria-hidden="true">:</span>
-              <span class="cd"><b id="m">--</b><small>MIN</small></span><span class="cd-sep" aria-hidden="true">:</span>
-              <span class="cd"><b id="s">--</b><small>SEK</small></span>
+            <div class="cd-row" id="cdRow">
+              <span class="cd"><b id="d">---</b><small>dní</small></span>
+              <span class="cd"><b id="h">--</b><small>hodin</small></span>
+              <span class="cd"><b id="m">--</b><small>minut</small></span>
+              <span class="cd"><b id="s">--</b><small>vteřin</small></span>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- ============ 01 BRIEFING ============ -->
-      <section class="section" id="info" aria-labelledby="infoTitle">
-        <p class="kicker">01 / Info</p>
-        <h2 class="h2" id="infoTitle" data-decrypt>Všechno, co potřebuješ vědět</h2>
-        <dl class="brief">
-          <div>
-            <dt>Kdy</dt>
-            <dd><span class="v">Pátek 12. března 2027</span><span class="s">Otevření sálu 18:30 · začátek 19:00</span></dd>
-          </div>
-          <div>
-            <dt>Kde</dt>
-            <dd>
-              <span class="v">Městský společenský dům</span>
-              <span class="s">MSD Kolín · Zámecká 109, 280 02 Kolín</span>
-              <a class="text-link" href="https://maps.google.com/?q=MSD+Kol%C3%ADn%2C+Z%C3%A1meck%C3%A1+109" target="_blank" rel="noopener noreferrer">Otevřít mapu ↗</a>
-            </dd>
-          </div>
-          <div>
-            <dt>Vstupné</dt>
-            <dd><span class="v">370 Kč</span><span class="s">Osobně ve škole / po dohodě s maturanty</span></dd>
-          </div>
-          <div>
-            <dt>Dresscode</dt>
-            <dd><span class="v">Společenský oděv</span><span class="s">Formal nebo semi-formal. Černé brýle a temné Matrix detaily vítány.</span></dd>
-          </div>
-          <div>
-            <dt>Afterparty</dt>
-            <dd><span class="v">Pokračování večera</span><span class="s">Afterparty proběhne po plese v klubu Staré Lázně Kolín.</span></dd>
-          </div>
-        </dl>
-      </section>
+      <div class="raster" aria-hidden="true"></div>
 
-      <!-- ============ 02 VSTUPENKY ============ -->
-      <section class="section" id="vstupenky" aria-labelledby="ticketTitle">
-        <p class="kicker">02 / Access</p>
-        <h2 class="h2" id="ticketTitle" data-decrypt>Vstupenky</h2>
-        <div class="ticket">
-          <div class="ticket-main">
-            <h3>Vstup do simulace</h3>
-            <p>Prodej bude probíhat <strong>osobně ve škole</strong> nebo <strong>po dohodě s maturanty</strong> třídy 8.A8. Novinky k prodeji najdeš na našem Instagramu.</p>
-            <a class="badge" href="https://www.instagram.com/8a8.gkolin/" target="_blank" rel="noopener noreferrer">@8a8.gkolin ↗</a>
-          </div>
-          <div class="ticket-stub" aria-label="Cena vstupenky 370 korun">
-            <div class="price">370<small> Kč</small></div>
-            <div class="stub-label">Vstupenka<br>12 · 03 · 2027</div>
+      <section id="info" aria-labelledby="infoTitle">
+        <div class="split">
+          <h2 class="h2" id="infoTitle">Pátek<br>12. března</h2>
+          <div>
+            <div class="times">
+              <div><b>18:30</b><span>otevíráme sál</span></div>
+              <div><b>19:00</b><span>začínáme</span></div>
+              <div class="later"><b aria-hidden="true">--:--</b><span>Připravuje se</span></div>
+            </div>
+            <p class="text">Městský společenský dům Kolín, Zámecká 109, 280 02 Kolín.</p>
+            <a class="link" href="https://maps.google.com/?q=MSD+Kol%C3%ADn%2C+Z%C3%A1meck%C3%A1+109" target="_blank" rel="noopener noreferrer">Otevřít mapu</a>
           </div>
         </div>
       </section>
 
-      <!-- ============ 03 PROGRAM ============ -->
-      <section class="section" id="program" aria-labelledby="programTitle">
-        <p class="kicker">03 / Run of show</p>
-        <h2 class="h2" id="programTitle" data-decrypt>Program večera</h2>
-        <div class="lineup">
-          <article class="act">
-            <div class="act-role">Hudba</div>
-            <p class="act-name">Paragraf <span>202</span></p>
-          </article>
-          <article class="act">
-            <div class="act-role">Moderátor</div>
-            <p class="act-name">Petr <span>Zalda</span></p>
-          </article>
+      <section id="vstupenky" aria-labelledby="ticketTitle">
+        <div class="ticket-split">
+          <p class="price" aria-hidden="true">370,-</p>
+          <div>
+            <h2 class="h2" id="ticketTitle">Vstupné <span class="sr-only">370 Kč</span></h2>
+            <p class="text">Lístky prodáváme osobně ve škole, nebo se domluv s někým z 8.A8.</p>
+            <p class="text muted">Kdy a kde prodáváme, píšeme na <a href="https://www.instagram.com/8a8.gkolin/" target="_blank" rel="noopener noreferrer">Instagram @8a8.gkolin</a>.</p>
+          </div>
         </div>
-        <ol class="timeline" aria-label="Harmonogram">
-          <li><span class="t-time">18:30</span><span class="t-what">Otevření sálu</span></li>
-          <li><span class="t-time">19:00</span><span class="t-what">Začátek plesu</span></li>
-          <li aria-label="Další bod programu zatím nezveřejněn"><span class="t-time" aria-hidden="true">--:--</span><span><span class="redacted" style="width:min(220px,60%)"></span></span></li>
-          <li aria-label="Další bod programu zatím nezveřejněn"><span class="t-time" aria-hidden="true">--:--</span><span><span class="redacted" style="width:min(160px,45%)"></span></span></li>
-          <li><span class="t-time" aria-hidden="true">&gt;_</span><span class="t-note">ZBYTEK PROGRAMU SE PŘIPRAVUJE. ZVEŘEJNÍME HO PŘED PLESEM.</span></li>
+      </section>
+
+      <div class="raster flip" aria-hidden="true"></div>
+
+      <section id="program" aria-labelledby="programTitle">
+        <h2 class="h2-sm" id="programTitle">Program</h2>
+        <div class="acts">
+          <p class="act"><small>Hraje</small><b>Paragraf 202</b></p>
+          <p class="act"><small>Moderuje</small><b>Petr Zalda</b></p>
+        </div>
+        <p class="text muted">Zbytek programu se připravuje. Zveřejníme ho před plesem.</p>
+      </section>
+
+      <section id="dresscode" aria-labelledby="dressTitle">
+        <div class="panel"><div class="split">
+          <h2 class="h2" id="dressTitle">Dresscode</h2>
+          <div>
+            <p class="text">Společenský oděv, formal nebo semi-formal.</p>
+            <p class="text muted">Černé brýle a temné Matrix detaily vítány.</p>
+          </div>
+        </div></div>
+      </section>
+
+      <section id="afterparty" aria-labelledby="afterTitle">
+        <h2 class="h2-sm" id="afterTitle">Pokračování večera</h2>
+        <p class="venue">Staré Lázně Kolín</p>
+        <p class="text">Afterparty po plese.</p>
+      </section>
+
+      <div class="raster" aria-hidden="true"></div>
+
+      <section id="tablo" aria-labelledby="tabloTitle">
+        <h2 class="h2" id="tabloTitle">Tablo 8.A8</h2>
+        <p class="text">28 maturantů. Fotky sem doplníme později.</p>
+        <!-- Fotku přidáte vložením <img> před číslo, např.:
+             <li><img src="assets/img/tablo/01.webp" alt="Jméno Příjmení" loading="lazy"><span class="n">01</span></li>
+             Číslo se pak samo skryje. Ideální poměr fotky je 3:4. -->
+        <ol class="tablo" aria-label="Tablo třídy 8.A8, fotky budou doplněny">
+          <li><span class="n">01</span></li><li><span class="n">02</span></li><li><span class="n">03</span></li><li><span class="n">04</span></li>
+          <li><span class="n">05</span></li><li><span class="n">06</span></li><li><span class="n">07</span></li><li><span class="n">08</span></li>
+          <li><span class="n">09</span></li><li><span class="n">10</span></li><li><span class="n">11</span></li><li><span class="n">12</span></li>
+          <li><span class="n">13</span></li><li><span class="n">14</span></li><li><span class="n">15</span></li><li><span class="n">16</span></li>
+          <li><span class="n">17</span></li><li><span class="n">18</span></li><li><span class="n">19</span></li><li><span class="n">20</span></li>
+          <li><span class="n">21</span></li><li><span class="n">22</span></li><li><span class="n">23</span></li><li><span class="n">24</span></li>
+          <li><span class="n">25</span></li><li><span class="n">26</span></li><li><span class="n">27</span></li><li><span class="n">28</span></li>
         </ol>
       </section>
 
-      <!-- ============ 04 TŘÍDA ============ -->
-      <section class="section" id="trida" aria-labelledby="classTitle">
-        <p class="kicker">04 / Encrypted network</p>
-        <h2 class="h2" id="classTitle" data-decrypt>28 identit</h2>
-        <p class="lead">Třída 8.A8 je zatím zašifrovaná. Odhalení se blíží.</p>
-        <div class="nodes" id="nodes" role="group" aria-label="28 zašifrovaných členů třídy"></div>
-        <div class="nodes-meta"><span>&gt; <output id="nodeOut">VYBER UZEL</output></span><span>28 NODES · IDENTITIES ENCRYPTED</span></div>
-      </section>
-
-      <!-- ============ 05 PLAKÁT ============ -->
-      <section class="section" id="plakat" aria-labelledby="posterTitle">
+      <section id="plakat" aria-labelledby="posterTitle">
         <div class="poster">
-          <a class="poster-frame" href="assets/img/poster-1240.jpg" target="_blank" rel="noopener">
+          <a class="frame" href="assets/img/poster-1240.jpg" target="_blank" rel="noopener">
             <img src="assets/img/poster-800.webp" srcset="assets/img/poster-800.webp 800w, assets/img/poster-1600.webp 1600w"
-                 sizes="(min-width: 900px) 40vw, 90vw" width="800" height="1131" loading="lazy" decoding="async"
+                 sizes="(min-width: 900px) 440px, 90vw" width="800" height="1131" loading="lazy" decoding="async"
                  alt="Plakát maturitního plesu: The Matrix, maturitní ples 8.A8, 12. 3. 2027, vstupné 370 Kč, @8a8.gkolin">
           </a>
           <div>
-            <p class="kicker">05 / See you</p>
-            <h2 class="h2" id="posterTitle" data-decrypt>Těšíme se na vás</h2>
-            <p class="lead">Seberte partu, vytáhněte to nejlepší ze skříně a užijte si s kamarády večer, na který se nezapomíná. Uvidíme se 12. března.</p>
+            <h2 class="h2" id="posterTitle">Uvidíme se<br>12. března</h2>
+            <p class="text">Seberte partu, vytáhněte to nejlepší ze skříně a přijďte.</p>
+            <a class="link" href="assets/img/poster-1240.jpg" target="_blank" rel="noopener">Plakát ve velkém</a>
           </div>
         </div>
       </section>
-
-      <div class="term-band">
-        <span><b>guest@8a8:~$</b> systém skrývá víc, než je vidět.</span>
-        <button type="button" id="terminalOpen2">open_terminal()</button>
-      </div>
     </main>
 
     <footer>
-      <span>© 2026–2027 · TŘÍDA 8.A8 · GYMNÁZIUM KOLÍN</span>
-      <span>THERE IS NO SPOON. THERE IS ONLY THE DANCE FLOOR.</span>
+      <p class="spoon">There is no spoon. There is only the dance floor.</p>
+      <p>© 2026–2027, třída 8.A8, Gymnázium Kolín</p>
     </footer>
   </div>
 
-  <!-- Spodní lišta na mobilu -->
   <div class="dock" id="dock" aria-label="Rychlé akce">
     <div class="dock-inner">
-      <a class="pill pill-red" id="dockCal" href="event.ics" download>Do kalendáře</a>
-      <a class="pill" href="https://www.instagram.com/8a8.gkolin/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <button class="pill pill-icon" type="button" data-share aria-label="Sdílet odkaz na ples">
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>
-      </button>
+      <a class="btn btn-main" id="dockCal" href="event.ics" download>Uložit datum</a>
+      <button class="btn" type="button" data-share aria-label="Sdílet odkaz na ples">Sdílet</button>
     </div>
   </div>
 
   <dialog class="dialog" id="terminal" aria-labelledby="terminalLabel">
-    <div class="dialog-bar"><span id="terminalLabel">8A8://MATRIX/TERMINAL</span><button class="icon-btn" type="button" data-close aria-label="Zavřít terminál">×</button></div>
+    <div class="dialog-bar"><span id="terminalLabel">8A8://MATRIX/TERMINAL</span><button class="x" type="button" data-close aria-label="Zavřít terminál">×</button></div>
     <pre class="term-out" id="termOut" role="log" aria-live="polite">SYSTEM READY.
 Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
     <div class="term-chips" id="termChips"></div>
@@ -659,24 +489,27 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
   </dialog>
 
   <dialog class="dialog" id="shareDialog" aria-labelledby="shareTitle">
-    <div class="dialog-bar"><span id="shareTitle">SHARE://LINK</span><button class="icon-btn" type="button" data-close aria-label="Zavřít sdílení">×</button></div>
+    <div class="dialog-bar"><span id="shareTitle">Sdílet odkaz</span><button class="x" type="button" data-close aria-label="Zavřít sdílení">×</button></div>
     <div class="share-body">
-      <p>Kopírování tu není dostupné. Označ odkaz a zkopíruj ho.</p>
+      <p>Kopírování tu nejde automaticky. Označ odkaz a zkopíruj ho.</p>
       <input class="share-url" id="shareUrl" type="text" readonly aria-label="Odkaz na maturitní ples">
     </div>
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="assets/vendor/gsap-3.15.0/gsap.min.js" defer></script>
+  <script src="assets/vendor/gsap-3.15.0/SplitText.min.js" defer></script>
   <script>
-  (() => {
+  addEventListener('DOMContentLoaded', () => {
     'use strict';
     const $ = (s, r = document) => r.querySelector(s);
     const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const EVENT_URL = 'https://8a8.gkolin.cz/';
     const START = new Date('2027-03-12T19:00:00+01:00').getTime();
     const END = new Date('2027-03-13T02:00:00+01:00').getTime();
+    const hasGsap = typeof window.gsap !== 'undefined';
 
     /* ---------- Toast ---------- */
     const toast = $('#toast'); let toastT;
@@ -692,130 +525,188 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
       const now = Date.now();
       if (now >= START) {
         clearInterval(cdTimer);
-        $('#cdRow').innerHTML = `<span class="countdown-done">${now < END ? 'SIMULACE PRÁVĚ BĚŽÍ' : 'DĚKUJEME, ŽE JSTE BYLI V SIMULACI'}</span>`;
-        $('.countdown-label').textContent = now < END ? 'Status' : 'Konec přenosu';
+        $('#cdRow').innerHTML = `<span class="countdown-done">${now < END ? 'Ples právě běží. Kde jsi?' : 'Díky, že jste přišli.'}</span>`;
+        $('.countdown-label').textContent = now < END ? 'Teď' : 'Po plese';
         return;
       }
       const sec = Math.floor((START - now) / 1000);
       if (sec === lastSec) return; lastSec = sec;
-      const p = (n, l = 2) => String(n).padStart(l, '0');
-      cd.d.textContent = p(Math.floor(sec / 86400), 2);
+      const p = n => String(n).padStart(2, '0');
+      cd.d.textContent = p(Math.floor(sec / 86400));
       cd.h.textContent = p(Math.floor(sec % 86400 / 3600));
       cd.m.textContent = p(Math.floor(sec % 3600 / 60));
       cd.s.textContent = p(sec % 60);
     }
     tick(); cdTimer = setInterval(tick, 1000);
 
-    /* ---------- Dešifrování nadpisů ---------- */
-    const GLYPHS = 'アカサタナハマヤラワ01ABCDEFX8#$%&';
-    function decrypt(el) {
-      const final = el.dataset.text;
-      let frame = 0; const total = 18;
-      el.classList.add('scrambling');
-      (function step() {
-        const revealed = Math.floor(final.length * frame / total);
-        el.textContent = final.split('').map((ch, i) =>
-          i < revealed || ch === ' ' ? ch : GLYPHS[Math.random() * GLYPHS.length | 0]).join('');
-        if (frame++ < total) requestAnimationFrame(() => setTimeout(step, 28));
-        else { el.textContent = final; el.classList.remove('scrambling'); }
-      })();
-    }
-    const heads = $$('[data-decrypt]');
-    heads.forEach(h => { h.dataset.text = h.textContent; h.setAttribute('aria-label', h.textContent); });
-    if (!reduceMotion.matches && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver(entries => {
-        for (const e of entries) if (e.isIntersecting) { decrypt(e.target); io.unobserve(e.target); }
-      }, { rootMargin: '0px 0px -15% 0px' });
-      heads.forEach(h => io.observe(h));
-    }
+    /* ---------- Rastrový portrét ze znaků „8.A8“ ----------
+       Portrét se rozloží na mřížku; jas buňky určuje velikost znaku.
+       Při načtení znaky jednou spadnou shora (jediný Matrix moment) a usadí se.
+       Pak se ze znaků vynoří skutečný portrét a myš / prst nad ním otevře okno zpátky do znaků. */
+    const plate = $('#plate'), canvas = $('#halftone'), ctx = canvas.getContext('2d');
+    const src = plate.querySelector('img');
+    const GLYPHS = '8.A8';
+    const COLORS = ['#1e5c47', '#5effc4', '#efe9da'];
+    const LEVELS = 7;
+    let cells = [], W = 0, H = 0, cell = 8, progress = reduceMotion ? 1 : 0, pointer = null, raf = 0;
 
-    /* ---------- 28 uzlů ---------- */
-    const nodesEl = $('#nodes'), nodeOut = $('#nodeOut');
-    const frag = document.createDocumentFragment();
-    for (let i = 1; i <= 28; i++) {
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = 'node';
-      const id = String(i).padStart(2, '0');
-      b.textContent = id; b.dataset.id = id;
-      b.setAttribute('aria-label', `Uzel ${id}, identita zašifrována`);
-      frag.append(b);
-    }
-    nodesEl.append(frag);
-    let activeNode = null;
-    nodesEl.addEventListener('click', e => {
-      const b = e.target.closest('.node'); if (!b) return;
-      activeNode?.classList.remove('on');
-      activeNode = b; b.classList.add('on');
-      const hex = Array.from({ length: 6 }, () => '0123456789ABCDEF'[Math.random() * 16 | 0]).join('');
-      nodeOut.textContent = `NODE_${b.dataset.id} · 0x${hex} · ACCESS DENIED · ODHALENÍ BRZY`;
-    });
-
-    /* ---------- Matrix déšť ---------- */
-    const canvas = $('#rain');
-    const ctx = canvas.getContext('2d');
-    const mobile = matchMedia('(max-width: 700px)');
-    const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789'.split('');
-    const fs = 16;
-    let W = 0, H = 0, drops = [], raf = 0, last = 0, boost = false;
-    let running = !document.hidden && !reduceMotion.matches;
-    function resize() {
-      const dpr = Math.min(devicePixelRatio || 1, 1.25);
-      W = innerWidth; H = innerHeight;
-      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    function buildGrid() {
+      const r = plate.getBoundingClientRect();
+      W = Math.round(r.width); H = Math.round(r.height);
+      if (!W || !H || !src.naturalWidth) return false;
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = W * dpr; canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const cols = Math.min(Math.ceil(W / (fs * (mobile.matches ? 2.2 : 1.5))), 100);
-      drops = Array.from({ length: cols }, () => Math.random() * -50);
-      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
-    }
-    function frame(t) {
-      raf = 0; if (!running) return;
-      const fps = boost ? 30 : (mobile.matches ? 18 : 24);
-      if (t - last < 1000 / fps) { loop(); return; }
-      last = t;
-      ctx.fillStyle = 'rgba(0,0,0,.1)'; ctx.fillRect(0, 0, W, H);
-      ctx.font = `${fs}px monospace`;
-      const step = W / drops.length;
-      for (let i = 0; i < drops.length; i++) {
-        const y = drops[i] * fs;
-        // každý ~5. znak je "8A8" podpis z plakátu
-        const ch = (i + (drops[i] | 0)) % 11 === 0 ? '8A8'[(drops[i] | 0) % 3] : CHARS[Math.random() * CHARS.length | 0];
-        ctx.fillStyle = Math.random() < .08 ? '#e9f2ec' : (i % 4 ? 'rgba(94,255,196,.85)' : 'rgba(0,245,212,.85)');
-        ctx.fillText(ch, i * step, y);
-        if (y > H && Math.random() > .975) drops[i] = 0;
-        drops[i] += boost ? 1.4 : .7 + Math.random() * .35;
+      cell = W < 600 ? 7 : 9;
+      const cols = Math.ceil(W / cell), rows = Math.ceil(H / cell);
+      // object-fit: cover, object-position 50% 22% — stejně jako <img>
+      const iw = src.naturalWidth, ih = src.naturalHeight, s = Math.max(W / iw, H / ih);
+      const sw = W / s, sh = H / s, sx = (iw - sw) * .5, sy = (ih - sh) * .22;
+      const off = document.createElement('canvas'); off.width = cols; off.height = rows;
+      const octx = off.getContext('2d', { willReadFrequently: true });
+      octx.drawImage(src, sx, sy, sw, sh, 0, 0, cols, rows);
+      const data = octx.getImageData(0, 0, cols, rows).data;
+      // Portrét je tmavý a zelený: jas roztáhneme mezi 5. a 98. percentil, ať obličej vyleze z černé
+      const lums = new Float32Array(cols * rows);
+      for (let j = 0; j < lums.length; j++) lums[j] = (data[j * 4] * .3 + data[j * 4 + 1] * .55 + data[j * 4 + 2] * .15) / 255;
+      const sorted = Float32Array.from(lums).sort();
+      const lo = sorted[Math.floor(sorted.length * .05)], hi = sorted[Math.floor(sorted.length * .98)] || 1;
+      cells = [];
+      for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+        const lum = Math.pow(Math.min(1, Math.max(0, (lums[y * cols + x] - lo) / (hi - lo))), .75);
+        if (lum < .12) continue;
+        const ch = GLYPHS[(y * 3 + x) % GLYPHS.length];
+        if (ch === ' ') continue;
+        const level = Math.min(LEVELS - 1, 1 + Math.floor(lum * (LEVELS - 1)));
+        cells.push({
+          x: x * cell + cell / 2, y: y * cell + cell / 2, ch, level,
+          color: lum > .85 ? 2 : lum > .35 ? 1 : 0,
+          fall: H * (.5 + Math.random() * .9), delay: Math.random() * .45 + (x / cols) * .1
+        });
       }
-      loop();
+      cells.sort((a, b) => a.level - b.level);
+      return true;
     }
-    function loop() { if (running && !raf) raf = requestAnimationFrame(frame); }
-    function setRunning() {
-      running = !document.hidden && !reduceMotion.matches;
-      if (running) loop(); else { cancelAnimationFrame(raf); raf = 0; }
-    }
-    let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(resize, 150); }, { passive: true });
-    document.addEventListener('visibilitychange', setRunning);
-    reduceMotion.addEventListener?.('change', setRunning);
-    resize(); loop();
 
-    /* ---------- Matrix mode (easter egg) ---------- */
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+    const fontFor = lv => `800 ${(cell * 1.9 * lv / (LEVELS - 1)).toFixed(1)}px "Big Shoulders", sans-serif`;
+    let lens = false;
+    function draw() {
+      raf = 0;
+      ctx.clearRect(0, 0, W, H);
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      if (lens) { drawLens(); return; }
+      let curLevel = -1;
+      for (const c of cells) {
+        let y = c.y, alpha = 1;
+        if (progress < 1) {
+          const t = Math.min(1, Math.max(0, (progress - c.delay) / (1 - .55)));
+          if (t <= 0) continue;
+          y = c.y - c.fall * (1 - easeOut(t));
+          alpha = Math.min(1, t * 3);
+        }
+        if (c.level !== curLevel) { curLevel = c.level; ctx.font = fontFor(curLevel); }
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = alpha < 1 ? COLORS[1] : COLORS[c.color];
+        ctx.fillText(c.ch, c.x, y);
+      }
+      ctx.globalAlpha = 1;
+    }
+    // Po odhalení portrétu: pod myší / prstem se otevře okno zpátky do znaků
+    function drawLens() {
+      if (!pointer) return;
+      const R = W < 600 ? 90 : 130, { x, y } = pointer;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, R);
+      g.addColorStop(0, 'rgba(0,0,0,.94)'); g.addColorStop(.7, 'rgba(0,0,0,.85)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g; ctx.fillRect(x - R, y - R, R * 2, R * 2);
+      let curLevel = -1;
+      for (const c of cells) {
+        const dx = c.x - x, dy = c.y - y, d2 = dx * dx + dy * dy;
+        if (d2 > R * R) continue;
+        if (c.level !== curLevel) { curLevel = c.level; ctx.font = fontFor(curLevel); }
+        ctx.globalAlpha = 1 - d2 / (R * R);
+        ctx.fillStyle = COLORS[c.color];
+        ctx.fillText(c.ch, c.x, c.y);
+      }
+      ctx.globalAlpha = 1;
+    }
+    const schedule = () => { if (!raf) raf = requestAnimationFrame(draw); };
+
+    function revealPortrait(instant) {
+      plate.classList.add('revealed');
+      const toLens = () => { lens = true; draw(); plate.classList.add('lens'); };
+      if (instant) toLens(); else setTimeout(toLens, 950);
+    }
+    function startHalftone() {
+      if (!buildGrid()) { revealPortrait(true); return; }
+      if (progress >= 1 || !hasGsap) { progress = 1; revealPortrait(true); revealTitle(); return; }
+      const state = { p: 0 };
+      gsap.timeline()
+        .to(state, { p: 1, duration: 2, ease: 'none', onUpdate: () => { progress = state.p; draw(); } })
+        .call(() => { progress = 1; draw(); revealPortrait(false); }, null, '+=.25');
+      gsap.delayedCall(.5, revealTitle);
+    }
+    const whenReady = () => document.fonts?.load('800 20px "Big Shoulders"').catch(() => {}).then(startHalftone) ?? startHalftone();
+    if (src.complete && src.naturalWidth) whenReady();
+    else { src.addEventListener('load', whenReady, { once: true }); src.addEventListener('error', () => revealPortrait(true), { once: true }); }
+
+    plate.addEventListener('pointermove', e => { if (!lens) return; const r = plate.getBoundingClientRect(); pointer = { x: e.clientX - r.left, y: e.clientY - r.top }; schedule(); }, { passive: true });
+    plate.addEventListener('pointerleave', () => { pointer = null; schedule(); });
+    plate.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') { pointer = null; schedule(); } });
+    let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (buildGrid()) draw(); }, 200); }, { passive: true });
+
+    /* ---------- Titulek: písmena vyjedou zespodu, když se portrét usazuje ---------- */
+    let titleShown = false;
+    function revealTitle() {
+      if (titleShown || reduceMotion || !hasGsap || !window.SplitText) return;
+      titleShown = true;
+      gsap.registerPlugin(SplitText);
+      const split = SplitText.create('#title .main', { type: 'chars', charsClass: 'char', mask: 'chars', aria: 'hidden' });
+      gsap.from(split.chars, { yPercent: 105, duration: .9, ease: 'expo.out', stagger: .05 });
+    }
+
+    /* ---------- Matrix déšť (jen v Matrix módu) ---------- */
+    const rain = $('#rain'), rctx = rain.getContext('2d');
+    const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789'.split('');
+    let rW = 0, rH = 0, drops = [], rRaf = 0, rLast = 0, rainOn = false;
+    function rainResize() {
+      rW = innerWidth; rH = innerHeight; rain.width = rW; rain.height = rH;
+      drops = Array.from({ length: Math.ceil(rW / 22) }, () => Math.random() * -40);
+    }
+    function rainFrame(t) {
+      rRaf = 0; if (!rainOn) { rctx.clearRect(0, 0, rW, rH); return; }
+      if (t - rLast > 40) {
+        rLast = t;
+        rctx.fillStyle = 'rgba(0,0,0,.12)'; rctx.fillRect(0, 0, rW, rH);
+        rctx.font = '16px monospace';
+        drops.forEach((d, i) => {
+          const ch = i % 7 === 0 ? '8A8'[(d | 0) % 3] : CHARS[Math.random() * CHARS.length | 0];
+          rctx.fillStyle = Math.random() < .08 ? '#efe9da' : '#5effc4';
+          rctx.fillText(ch, i * 22, d * 16);
+          drops[i] = d * 16 > rH && Math.random() > .97 ? 0 : d + 1;
+        });
+      }
+      rRaf = requestAnimationFrame(rainFrame);
+    }
     function matrixMode(msg) {
       const on = document.body.classList.toggle('matrix-mode');
-      boost = on;
-      if (!reduceMotion.matches) { const f = $('#flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go'); }
-      notify(msg || (on ? 'SIMULACE ODEMČENA // SYSTEM OVERRIDE' : 'NÁVRAT DO REALITY'));
+      rainOn = on && !reduceMotion;
+      if (rainOn) { rainResize(); if (!rRaf) rRaf = requestAnimationFrame(rainFrame); }
+      notify(msg || (on ? 'SIMULACE ODEMČENA' : 'NÁVRAT DO REALITY'));
       return on;
     }
 
     /* ---------- Sdílení ---------- */
     const shareDialog = $('#shareDialog'), shareUrl = $('#shareUrl');
     async function share() {
-      const data = { title: 'THE MATRIX — Maturitní ples 8.A8', text: 'Maturitní ples 8.A8 · pá 12. 3. 2027 · MSD Kolín', url: EVENT_URL };
+      const data = { title: 'THE MATRIX — Maturitní ples 8.A8', text: 'Maturitní ples 8.A8, pátek 12. 3. 2027, MSD Kolín', url: EVENT_URL };
       if (navigator.share) {
         try { await navigator.share(data); return; } catch (e) { if (e.name === 'AbortError') return; }
       }
       try {
         if (!window.isSecureContext || !navigator.clipboard?.writeText) throw 0;
         await navigator.clipboard.writeText(EVENT_URL);
-        notify('Odkaz zkopírován do schránky.');
+        notify('Odkaz zkopírován.');
       } catch (_) {
         shareUrl.value = EVENT_URL;
         if (!shareDialog.open) shareDialog.showModal();
@@ -824,7 +715,7 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
     }
     $$('[data-share]').forEach(b => b.addEventListener('click', share));
 
-    /* ---------- Kalendář: zavřít menu kliknutím mimo, Android → Google ---------- */
+    /* ---------- Kalendář ---------- */
     const cal = $('#calendar');
     document.addEventListener('click', e => { if (cal.open && !cal.contains(e.target)) cal.open = false; });
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && cal.open) { cal.open = false; cal.querySelector('summary').focus(); } });
@@ -835,7 +726,7 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
       dockCal.target = '_blank'; dockCal.rel = 'noopener noreferrer';
     }
 
-    /* ---------- Spodní lišta: zobrazit po opuštění hero tlačítek ---------- */
+    /* ---------- Spodní lišta: až po odscrollování úvodních tlačítek ---------- */
     const dock = $('#dock');
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(([e]) => dock.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0))
@@ -843,11 +734,9 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
     }
 
     /* ---------- Dialogy ---------- */
-    $$('dialog').forEach(d => {
-      d.addEventListener('click', e => { if (e.target === d || e.target.closest('[data-close]')) d.close(); });
-    });
+    $$('dialog').forEach(d => d.addEventListener('click', e => { if (e.target === d || e.target.closest('[data-close]')) d.close(); }));
 
-    /* ---------- Terminál ---------- */
+    /* ---------- Skrytý terminál (klávesa ~ nebo 5× klepnout na logo) ---------- */
     const terminal = $('#terminal'), out = $('#termOut'), input = $('#termInput');
     const COMMANDS = {
       help: () => 'PŘÍKAZY: help · date · location · tickets · program · lineup · instagram · redpill · bluepill · spoon · matrix · clear',
@@ -880,15 +769,14 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
       b.addEventListener('click', () => run(c)); chips.append(b);
     });
     function openTerminal() { if (!terminal.open) terminal.showModal(); if (matchMedia('(hover: hover)').matches) input.focus(); }
-    $('#terminalOpen').addEventListener('click', openTerminal);
-    $('#terminalOpen2').addEventListener('click', openTerminal);
     $('#termForm').addEventListener('submit', e => { e.preventDefault(); run(input.value); input.value = ''; });
 
-    /* ---------- Easter eggy: Konami + 5× klepnout na logo ---------- */
+    /* ---------- Easter eggy: Konami, klávesa ~, 5× klepnout na logo ---------- */
     const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
     let k = 0;
     addEventListener('keydown', e => {
       if (terminal.open || e.altKey || e.ctrlKey || e.metaKey) return;
+      if ((e.key === '~' || e.key === '`') && !e.target.closest?.('input, textarea')) { e.preventDefault(); openTerminal(); return; }
       const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
       k = key === KONAMI[k] ? k + 1 : (key === KONAMI[0] ? 1 : 0);
       if (k === KONAMI.length) { k = 0; matrixMode(); }
@@ -896,11 +784,11 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
     let taps = 0, tapT;
     $('#brand').addEventListener('click', e => {
       taps++; clearTimeout(tapT); tapT = setTimeout(() => { taps = 0; }, 1400);
-      if (taps >= 5) { e.preventDefault(); taps = 0; matrixMode('FOLLOW THE WHITE RABBIT // SIMULACE ODEMČENA'); }
+      if (taps >= 5) { e.preventDefault(); taps = 0; matrixMode('FOLLOW THE WHITE RABBIT'); openTerminal(); }
     });
 
-    console.log('%c8.A8 // THE MATRIX%c\nWake up. Napiš „help“ do terminálu na webu.', 'background:#000;color:#5effc4;font:700 15px monospace;padding:8px', 'color:#93aba0;font:12px monospace');
-  })();
+    console.log('%c8.A8 // THE MATRIX%c\nWake up. Stiskni ~ a napiš „help“.', 'background:#000;color:#5effc4;font:700 15px monospace;padding:8px', 'color:#8fa79c;font:12px monospace');
+  });
   </script>
 </body>
 </html>
