@@ -8,7 +8,16 @@
   <title>THE MATRIX — Maturitní ples 8.A8 · Gymnázium Kolín</title>
   <meta name="description" content="Maturitní ples třídy 8.A8 Gymnázia Kolín. Pátek 12. března 2027 od 19:00, MSD Kolín. Hraje Paragraf 202, moderuje Petr Zalda. Vstupné 370 Kč.">
   <link rel="canonical" href="https://8a8.gkolin.cz/">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    // Titulek schováme až do animace (jinak problikne), pojistka ho po 3 s ukáže v každém případě
+    (function (d) {
+      d.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        d.classList.add('title-pending');
+        setTimeout(function () { d.classList.remove('title-pending'); }, 3000);
+      }
+    })(document.documentElement);
+  </script>
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Ctext x='9' y='44' fill='%235EFFC4' font-family='monospace' font-weight='700' font-size='32'%3E%26gt;_%3C/text%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -144,6 +153,7 @@
     .title .the { display: block; margin: 0 0 .12em .03em; font-size: clamp(18px, 5.4vw, 51px); font-weight: 800; letter-spacing: .5em; }
     .title .main { display: block; margin-left: -.035em; }
     .title .char { display: inline-block; }
+    .title-pending .title .main { visibility: hidden; }
 
     .datum { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: 18px; font-size: 20px; }
     .datum .big { font: 800 clamp(64px, 19vw, 132px)/.82 var(--display); color: var(--mint); letter-spacing: -.01em; }
@@ -648,7 +658,6 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
       gsap.timeline()
         .to(state, { p: 1, duration: 2, ease: 'none', onUpdate: () => { progress = state.p; draw(); } })
         .call(() => { progress = 1; draw(); revealPortrait(false); }, null, '+=.25');
-      gsap.delayedCall(.5, revealTitle);
     }
     const whenReady = () => document.fonts?.load('800 20px "Big Shoulders"').catch(() => {}).then(startHalftone) ?? startHalftone();
     if (src.complete && src.naturalWidth) whenReady();
@@ -662,12 +671,19 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
     /* ---------- Titulek: písmena vyjedou zespodu, když se portrét usazuje ---------- */
     let titleShown = false;
     function revealTitle() {
-      if (titleShown || reduceMotion || !hasGsap || !window.SplitText) return;
+      if (titleShown) return;
       titleShown = true;
+      const root = document.documentElement;
+      if (reduceMotion || !hasGsap || !window.SplitText) { root.classList.remove('title-pending'); return; }
       gsap.registerPlugin(SplitText);
       const split = SplitText.create('#title .main', { type: 'chars', charsClass: 'char', mask: 'chars', aria: 'hidden' });
-      gsap.from(split.chars, { yPercent: 105, duration: .9, ease: 'expo.out', stagger: .05 });
+      // výchozí pozici písmen nastavíme dřív, než titulek zviditelníme, takže nic neproblikne
+      gsap.set(split.chars, { yPercent: 105 });
+      root.classList.remove('title-pending');
+      gsap.to(split.chars, { yPercent: 0, duration: .9, ease: 'expo.out', stagger: .05, delay: .15 });
     }
+    // Titulek nečeká na portrét: stačí, aby bylo načtené písmo (SplitText měří písmena)
+    (document.fonts?.load('900 100px "Big Shoulders"') ?? Promise.resolve()).catch(() => {}).then(revealTitle);
 
     /* ---------- Matrix déšť (jen v Matrix módu) ---------- */
     const rain = $('#rain'), rctx = rain.getContext('2d');
