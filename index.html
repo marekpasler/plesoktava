@@ -288,12 +288,15 @@
       footer { padding-bottom: calc(96px + var(--safe-b)); }
     }
     @media (min-width: 900px) {
-      .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: end; min-height: min(100svh - 60px, 940px); }
-      .plate { grid-column: 2; grid-row: 1; align-self: center; margin: 0 calc(-1 * var(--gutter)) 0 0;
-        -webkit-mask-image: radial-gradient(closest-side at 50% 50%, #000 72%, transparent 100%);
-                mask-image: radial-gradient(closest-side at 50% 50%, #000 72%, transparent 100%); }
-      .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
-      .hero-copy { grid-column: 1 / -1; grid-row: 1; align-self: end; margin: 0 0 56px; font-size: clamp(170px, 19vw, 300px); }
+      /* Text vlevo, portrét vpravo, bez překryvu. Portrét celý, jen levý a spodní okraj dozní do černé. */
+      .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(24px, 3vw, 56px); align-items: center; min-height: min(100svh - 60px, 940px); }
+      .plate { grid-column: 2; grid-row: 1; margin: 0 calc(-1 * var(--gutter)) 0 0;
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 82%, transparent);
+        -webkit-mask-composite: source-in;
+                mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 82%, transparent);
+                mask-composite: intersect; }
+      .hero-copy { grid-column: 1; grid-row: 1; margin: 0; font-size: clamp(110px, 13vw, 195px); }
+      .title .main { white-space: nowrap; }
       .hero-copy > :not(.title) { max-width: 520px; }
       .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
       .acts { grid-template-columns: 1fr 1fr; }
