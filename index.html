@@ -66,7 +66,7 @@
     "image": ["https://8a8.gkolin.cz/og-image.jpg"],
     "performer": { "@type": "MusicGroup", "name": "Paragraf 202" },
     "organizer": { "@type": "Organization", "name": "Třída 8.A8, Gymnázium Kolín", "url": "https://8a8.gkolin.cz/" },
-    "offers": { "@type": "Offer", "price": "370", "priceCurrency": "CZK", "url": "https://8a8.gkolin.cz/#vstupenky" }
+    "offers": { "@type": "Offer", "price": "370", "priceCurrency": "CZK", "availability": "https://schema.org/LimitedAvailability", "url": "https://8a8.gkolin.cz/#vstupenky" }
   }
   </script>
 
@@ -213,6 +213,7 @@
     .text { max-width: 32ch; margin-top: 18px; font-size: clamp(22px, 1.7vw, 26px); line-height: 1.4; }
     .text + .text { margin-top: 10px; }
     .muted { color: var(--muted); }
+    .hot { color: var(--mint); font-weight: 800; }
     .link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 6px; color: var(--mint); font-weight: 700; }
     .link:hover { color: var(--ivory); }
 
@@ -410,8 +411,9 @@
           <p class="price" aria-hidden="true">370,-</p>
           <div>
             <h2 class="h2" id="ticketTitle">Vstupné <span class="sr-only">370 Kč</span></h2>
-            <p class="text">Lístky prodáváme osobně ve škole (p02), nebo napiš na @8a8.gkolin.</p>
-            <p class="text muted">Kdy a kde prodáváme, píšeme na <a href="https://www.instagram.com/8a8.gkolin/" target="_blank" rel="noopener noreferrer">Instagram @8a8.gkolin</a>.</p>
+            <p class="text"><strong class="hot">Zbývají poslední lístky.</strong></p>
+            <p class="text">Kup si ho v naší třídě P02, nebo nám napiš do DM na <a href="https://ig.me/m/8a8.gkolin" target="_blank" rel="noopener noreferrer">Instagram @8a8.gkolin</a>.</p>
+            <p class="text muted">Platba QR kódem nebo hotově.</p>
           </div>
         </div>
       </section>
@@ -762,7 +764,7 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
       help: () => 'PŘÍKAZY: help · date · location · tickets · program · lineup · instagram · redpill · bluepill · spoon · matrix · clear',
       date: () => 'PÁTEK 12. 03. 2027 · SÁL 18:30 · START 19:00 · MSD KOLÍN',
       location: () => 'Městský společenský dům, Zámecká 109, 280 02 Kolín.',
-      tickets: () => 'VSTUPNÉ: 370 Kč. Prodej osobně ve škole / po dohodě s maturanty 8.A8.',
+      tickets: () => 'VSTUPNÉ: 370 Kč. ZBÝVAJÍ POSLEDNÍ LÍSTKY.\nProdej ve třídě P02 nebo přes Instagram DM @8a8.gkolin. Platba QR kódem nebo hotově.',
       program: () => '18:30 OTEVŘENÍ SÁLU\n19:00 ZAČÁTEK PLESU\nZbytek programu se připravuje.',
       lineup: () => 'HUDBA: Paragraf 202\nMODERÁTOR: Petr Zalda',
       instagram: () => 'TRANSMISSION: instagram.com/8a8.gkolin/',
