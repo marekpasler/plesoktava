@@ -187,7 +187,6 @@
     .menu a span { color: var(--muted); font: 400 15px var(--mono); }
     .menu a:hover, .menu a:focus-visible { background: var(--mint); color: var(--black); }
     .menu a:hover span, .menu a:focus-visible span { color: var(--black); }
-    .row2 { display: flex; gap: 10px; }
 
     .countdown { margin-top: 40px; }
     .countdown-label { color: var(--muted); font-size: 18px; }
@@ -411,6 +410,7 @@
           <p class="price" aria-hidden="true">370,-</p>
           <div>
             <h2 class="h2" id="ticketTitle">Vstupné <span class="sr-only">370 Kč</span></h2>
+            <!-- Stav prodeje je i v příkazu tickets (terminál) a v JSON-LD "availability" v hlavičce. Měnit všechna tři místa. -->
             <p class="text"><strong class="hot">Zbývají poslední lístky.</strong></p>
             <p class="text">Kup si ho v naší třídě P02, nebo nám napiš do DM na <a href="https://ig.me/m/8a8.gkolin" target="_blank" rel="noopener noreferrer">Instagram @8a8.gkolin</a>.</p>
             <p class="text muted">Platba QR kódem nebo hotově.</p>
@@ -592,7 +592,6 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
         const lum = Math.pow(Math.min(1, Math.max(0, (lums[y * cols + x] - lo) / (hi - lo))), .75);
         if (lum < .12) continue;
         const ch = GLYPHS[(y * 3 + x) % GLYPHS.length];
-        if (ch === ' ') continue;
         const level = Math.min(LEVELS - 1, 1 + Math.floor(lum * (LEVELS - 1)));
         cells.push({
           x: x * cell + cell / 2, y: y * cell + cell / 2, ch, level,
@@ -668,7 +667,7 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
     plate.addEventListener('pointermove', e => { if (!lens) return; const r = plate.getBoundingClientRect(); pointer = { x: e.clientX - r.left, y: e.clientY - r.top }; schedule(); }, { passive: true });
     plate.addEventListener('pointerleave', () => { pointer = null; schedule(); });
     plate.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') { pointer = null; schedule(); } });
-    let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (buildGrid()) draw(); }, 200); }, { passive: true });
+    let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (buildGrid()) draw(); if (rainOn) rainResize(); }, 200); }, { passive: true });
 
     /* ---------- Titulek: písmena vyjedou zespodu, když se portrét usazuje ---------- */
     let titleShown = false;
@@ -676,6 +675,8 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
       if (titleShown) return;
       titleShown = true;
       const root = document.documentElement;
+      // pojistka (3 s) už titulek ukázala: animace by ho schovala a problikl by znovu
+      if (!root.classList.contains('title-pending')) return;
       if (reduceMotion || !hasGsap || !window.SplitText) { root.classList.remove('title-pending'); return; }
       gsap.registerPlugin(SplitText);
       const split = SplitText.create('#title .main', { type: 'chars', charsClass: 'char', mask: 'chars', aria: 'hidden' });
@@ -742,7 +743,8 @@ Napiš <span class="c">help</span> nebo klepni na příkaz níže.</pre>
     document.addEventListener('click', e => { if (cal.open && !cal.contains(e.target)) cal.open = false; });
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && cal.open) { cal.open = false; cal.querySelector('summary').focus(); } });
     $$('.menu a', cal).forEach(a => a.addEventListener('click', () => { cal.open = false; }));
-    if (/Android/i.test(navigator.userAgent)) {
+    // Android a prohlížeč v aplikaci Instagram neumí .ics předat kalendáři, Google Kalendář funguje všude
+    if (/Android|Instagram/i.test(navigator.userAgent)) {
       const dockCal = $('#dockCal');
       dockCal.href = $('#gcalLink').href; dockCal.removeAttribute('download');
       dockCal.target = '_blank'; dockCal.rel = 'noopener noreferrer';
